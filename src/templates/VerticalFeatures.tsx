@@ -8,7 +8,9 @@ const VerticalFeatures = () => (
   >
     <VerticalFeatureRow
       title="Experienced English Teacher"
-      description="IELTS Academic 7.5, PhD in Artificial Intelligence from the University of Tehran, and an online private English teacher with experience teaching more than 200 learners at different levels, including successful preparation for internationally recognized exams. — مدرس با نمره ۷.۵ آیلتس آکادمیک، دارای دکتری هوش مصنوعی از دانشگاه تهران و مدرس خصوصی آنلاین با سابقه آموزش به بیش از ۲۰۰ زبان‌آموز در سطوح مختلف و سابقه موفقیت در آزمون‌های معتبر."
+      description="IELTS Academic 7.5, PhD in Artificial Intelligence from the University of Tehran, and an online private English teacher with experience teaching more than 200 learners at different levels, including successful preparation for internationally recognized exams.
+      
+      مدرس با نمره ۷.۵ آیلتس آکادمیک، دارای دکتری هوش مصنوعی از دانشگاه تهران و مدرس خصوصی آنلاین با سابقه آموزش به بیش از ۲۰۰ زبان‌آموز در سطوح مختلف و سابقه موفقیت در آزمون‌های معتبر."
       image="/assets/images/feature.svg"
       imageAlt="Experienced English teacher"
     />
