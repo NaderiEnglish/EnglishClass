@@ -5,6 +5,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 module.exports = withBundleAnalyzer({
   output: 'export',
+  images: {
+    unoptimized: true,
+  },
 
   eslint: {
     dirs: ['.'],
