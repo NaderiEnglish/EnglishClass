@@ -9,7 +9,7 @@ import { AppConfig } from '../utils/AppConfig';
 import { Banner } from './Banner';
 import { Footer } from './Footer';
 import { Hero } from './Hero';
-import { Sponsors } from './Sponsors';
+import { IntroVideo } from './IntroVideo';
 import { VerticalFeatures } from './VerticalFeatures';
 
 type Language = 'en' | 'fa';
@@ -41,7 +41,7 @@ const Base = () => {
         <LanguageSelector onSelect={setLanguage} />
 
         <Hero />
-        <Sponsors />
+        <IntroVideo />
         <VerticalFeatures />
         <Banner />
         <Footer />
