@@ -10,9 +10,7 @@ const Footer = () => {
     <footer className="border-t border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
       <div className="mx-auto max-w-screen-lg px-3 py-8 text-center text-gray-600 dark:text-gray-300">
         <p>
-          {isPersian
-            ? '© تمامی حقوق محفوظ است.'
-            : '© All rights reserved.'}
+          {isPersian ? '© تمامی حقوق محفوظ است.' : '© All rights reserved.'}
         </p>
 
         <div className="mt-4">
@@ -20,7 +18,7 @@ const Footer = () => {
             href="https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template"
             className="text-primary-500 hover:text-primary-600"
           >
-            GitHub
+            {isPersian ? 'گیت‌هاب' : 'GitHub'}
           </Link>
         </div>
       </div>
