@@ -27,12 +27,10 @@ const Hero = () => {
           </li>
 
           <li>
-            <Link
-              href="/"
-              className="text-gray-700 dark:text-gray-200"
-            >
-              {isPersian ? 'ورود' : 'Sign in'}
+            <Link href="/" className="text-gray-700 dark:text-gray-200">
+            {isPersian ? 'ورود' : 'Sign in'}
             </Link>
+
           </li>
 
           <li>
