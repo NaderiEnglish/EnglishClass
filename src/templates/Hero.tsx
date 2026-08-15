@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
-import { useLanguage } from '../context/LanguageContext';
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
+import { useLanguage } from '../context/LanguageContext';
 import { HeroOneButton } from '../hero/HeroOneButton';
 import { Section } from '../layout/Section';
 import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
@@ -23,9 +23,7 @@ const Hero = () => {
           </li>
 
           <li>
-            <Link href="/">
-              {isPersian ? 'ورود' : 'Sign in'}
-            </Link>
+            <Link href="/">{isPersian ? 'ورود' : 'Sign in'}</Link>
           </li>
         </NavbarTwoColumns>
       </Section>
@@ -37,16 +35,12 @@ const Hero = () => {
               {isPersian ? (
                 <>
                   {'آموزش زبان انگلیسی\n'}
-                  <span className="text-primary-500">
-                    به روشی ساده و کاربردی
-                  </span>
+                  <span className="text-primary-500">به روشی ساده و کاربردی</span>
                 </>
               ) : (
                 <>
                   {'Learn English\n'}
-                  <span className="text-primary-500">
-                    the practical way
-                  </span>
+                  <span className="text-primary-500">the practical way</span>
                 </>
               )}
             </>
