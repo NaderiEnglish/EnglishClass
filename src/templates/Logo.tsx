@@ -13,7 +13,7 @@ const Logo = (props: ILogoProps) => {
 
   return (
     <Image
-      src={`${router.basePath}/assets/images/logo.png`}
+      src={`${router.basePath}/assets/images/logo.svg`}
       alt="Naderi English"
       width={width}
       height={height}
