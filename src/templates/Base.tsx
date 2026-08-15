@@ -33,7 +33,9 @@ const Base = () => {
   return (
     <LanguageContext.Provider value={{ language }}>
       <div
-        className="min-h-screen bg-white text-gray-600 antialiased dark:bg-gray-900 dark:text-gray-300"
+        className={`min-h-screen bg-white text-gray-600 antialiased dark:bg-gray-900 dark:text-gray-300 ${
+          language === 'fa' ? 'font-persian' : ''
+        }`}
         dir={language === 'fa' ? 'rtl' : 'ltr'}
       >
         <Meta title={AppConfig.title} description={AppConfig.description} />
