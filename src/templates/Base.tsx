@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import { LanguageSelector } from '../components/LanguageSelector';
 import { Meta } from '../layout/Meta';
 import { AppConfig } from '../utils/AppConfig';
 import { Banner } from './Banner';
@@ -9,7 +10,6 @@ import { Footer } from './Footer';
 import { Hero } from './Hero';
 import { Sponsors } from './Sponsors';
 import { VerticalFeatures } from './VerticalFeatures';
-import { LanguageSelector } from '../components/LanguageSelector';
 
 type Language = 'en' | 'fa';
 
@@ -34,10 +34,7 @@ const Base = () => {
       className="text-gray-600 antialiased"
       dir={language === 'fa' ? 'rtl' : 'ltr'}
     >
-      <Meta
-        title={AppConfig.title}
-        description={AppConfig.description}
-      />
+      <Meta title={AppConfig.title} description={AppConfig.description} />
 
       <LanguageSelector onSelect={setLanguage} />
 
