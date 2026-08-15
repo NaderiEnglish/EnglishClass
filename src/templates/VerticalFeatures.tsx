@@ -32,7 +32,9 @@ const VerticalFeatures = () => {
         }
         image="/assets/images/feature.svg"
         imageAlt={
-          isPersian ? 'مدرس با تجربه زبان انگلیسی' : 'Experienced English teacher'
+          isPersian
+            ? 'مدرس با تجربه زبان انگلیسی'
+            : 'Experienced English teacher'
         }
       />
 
