@@ -7,7 +7,7 @@ const IntroVideo = () => {
 
   return (
     <Section
-      title={isPersian ? 'معرفی دوره و مدرس' : 'Introduction'}
+      title={isPersian ? 'معرفی مدرس و کلاس‌ها' : 'Meet Your Teacher'}
       description={
         isPersian
           ? 'در این ویدیو با روش تدریس و نحوه برگزاری کلاس‌ها آشنا شوید.'
@@ -15,16 +15,20 @@ const IntroVideo = () => {
       }
     >
       <div className="mx-auto max-w-4xl">
-        <div className="overflow-hidden rounded-2xl shadow-xl">
-          <video
-            className="h-auto w-full"
-            controls
-            playsInline
-            preload="metadata"
-          >
-            <source src="/assets/videos/intro.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+        <div className="relative overflow-hidden rounded-2xl shadow-xl">
+          <div className="aspect-video">
+            <iframe
+              className="h-full w-full"
+              src="https://m.youtube.com/watch?v=X1WpQInh1Dw&pp=ygUedGhlIG1vc3QgY3JpdGljYWwgc29jaWFsIHNraWxs"
+              title={
+                isPersian
+                  ? 'معرفی مدرس و کلاس‌های زبان انگلیسی'
+                  : 'Introduction to English classes'
+              }
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
         </div>
       </div>
     </Section>
