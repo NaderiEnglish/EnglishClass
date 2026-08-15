@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { useLanguage } from '../context/LanguageContext';
 import { Button } from '../button/Button';
+import { useLanguage } from '../context/LanguageContext';
 import { Section } from '../layout/Section';
 
 const Banner = () => {
