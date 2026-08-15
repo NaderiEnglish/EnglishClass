@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { Meta } from '../layout/Meta';
 import { AppConfig } from '../utils/AppConfig';
+import { LanguageContext } from '../context/LanguageContext';
 import { Banner } from './Banner';
 import { Footer } from './Footer';
 import { Hero } from './Hero';
@@ -30,20 +31,22 @@ const Base = () => {
   }, [language]);
 
   return (
-    <div
-      className="text-gray-600 antialiased"
-      dir={language === 'fa' ? 'rtl' : 'ltr'}
-    >
-      <Meta title={AppConfig.title} description={AppConfig.description} />
+    <LanguageContext.Provider value={{ language }}>
+      <div
+        className="text-gray-600 antialiased"
+        dir={language === 'fa' ? 'rtl' : 'ltr'}
+      >
+        <Meta title={AppConfig.title} description={AppConfig.description} />
 
-      <LanguageSelector onSelect={setLanguage} />
+        <LanguageSelector onSelect={setLanguage} />
 
-      <Hero />
-      <Sponsors />
-      <VerticalFeatures />
-      <Banner />
-      <Footer />
-    </div>
+        <Hero />
+        <Sponsors />
+        <VerticalFeatures />
+        <Banner />
+        <Footer />
+      </div>
+    </LanguageContext.Provider>
   );
 };
 
