@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 900 500"
+     width="900"
+     height="500">
+
+  <style>
+    .bubble {
+      fill: #eaf3ff;
+      stroke: currentColor;
+      stroke-width: 8;
+      stroke-linejoin: round;
+    }
+
+    .title {
+      fill: currentColor;
+      font-family: Inter, Poppins, "Segoe UI", Arial, sans-serif;
+      font-size: 92px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      fill: currentColor;
+      font-family: Inter, Poppins, "Segoe UI", Arial, sans-serif;
+      font-size: 52px;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+
+    .divider {
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .bubble {
+        fill: #1d4ed8;
+      }
+    }
+  </style>
+
+  <!-- Speech Bubble -->
+  <path class="bubble"
+        d="
+        M150 80
+        H720
+        Q830 80 830 190
+        V260
+        Q830 370 720 370
+        H370
+        C325 370 290 390 250 430
+        L255 372
+        H150
+        Q70 372 70 292
+        V160
+        Q70 80 150 80
+        Z"/>
+
+  <!-- Naderi -->
+  <text class="title"
+        x="450"
+        y="220"
+        text-anchor="middle">
+    Naderi
+  </text>
+
+  <!-- Left Divider -->
+  <line class="divider"
+        x1="220"
+        y1="290"
+        x2="330"
+        y2="290"/>
+
+  <!-- English -->
+  <text class="subtitle"
+        x="450"
+        y="307"
+        text-anchor="middle">
+    English
+  </text>
+
+  <!-- Right Divider -->
+  <line class="divider"
+        x1="570"
+        y1="290"
+        x2="680"
+        y2="290"/>
+
+</svg>
