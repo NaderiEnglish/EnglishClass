@@ -19,7 +19,7 @@ const IntroVideo = () => {
           <div className="aspect-video">
             <iframe
               className="h-full w-full"
-              src="src="https://www.youtube.com/embed/X1WpQInh1Dw""
+              src="https://www.youtube.com/embed/X1WpQInh1Dw"
               title={
                 isPersian
                   ? 'معرفی مدرس و کلاس‌های زبان انگلیسی'
