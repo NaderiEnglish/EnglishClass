@@ -1,5 +1,8 @@
 module.exports = {
+  darkMode: 'class',
+
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
+
   theme: {
     fontSize: {
       xs: '0.75rem',
@@ -13,6 +16,7 @@ module.exports = {
       '5xl': '3rem',
       '6xl': '4rem',
     },
+
     extend: {
       colors: {
         primary: {
@@ -26,6 +30,7 @@ module.exports = {
           800: '#014C6E',
           900: '#013349',
         },
+
         gray: {
           100: '#f7fafc',
           200: '#edf2f7',
@@ -38,10 +43,12 @@ module.exports = {
           900: '#1a202c',
         },
       },
+
       lineHeight: {
         hero: '4.5rem',
       },
     },
   },
+
   plugins: [],
 };
