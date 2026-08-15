@@ -18,6 +18,10 @@ module.exports = {
     },
 
     extend: {
+      fontFamily: {
+        persian: ['Vazirmatn', 'sans-serif'],
+      },
+
       colors: {
         primary: {
           100: '#E6F6FE',
@@ -33,7 +37,7 @@ module.exports = {
 
         gray: {
           100: '#f7fafc',
-          200: '#edf2f7',
+          200: '#edf2f0',
           300: '#e2e8f0',
           400: '#cbd5e0',
           500: '#a0aec0',
