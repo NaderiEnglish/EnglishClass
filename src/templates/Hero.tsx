@@ -25,14 +25,11 @@ const Hero = () => {
               {isPersian ? 'گیت‌هاب' : 'GitHub'}
             </Link>
           </li>
-
           <li>
             <Link href="/" className="text-gray-700 dark:text-gray-200">
-            {isPersian ? 'ورود' : 'Sign in'}
+              {isPersian ? 'ورود' : 'Sign in'}
             </Link>
-
           </li>
-
           <li>
             <ThemeToggle />
           </li>
