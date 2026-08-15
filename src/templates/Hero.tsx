@@ -13,7 +13,7 @@ const Hero = () => {
   const isPersian = language === 'fa';
 
   return (
-    <Background color="bg-gray-100">
+    <Background color="bg-gray-100 dark:bg-gray-900">
       <Section yPadding="py-6">
         <NavbarTwoColumns logo={<Logo xl />}>
           <li>
