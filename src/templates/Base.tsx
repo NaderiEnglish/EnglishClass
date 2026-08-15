@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 
+import { LanguageContext } from '../context/LanguageContext';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { Meta } from '../layout/Meta';
 import { AppConfig } from '../utils/AppConfig';
-import { LanguageContext } from '../context/LanguageContext';
 import { Banner } from './Banner';
 import { Footer } from './Footer';
 import { Hero } from './Hero';
