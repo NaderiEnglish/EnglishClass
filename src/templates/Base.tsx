@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { LanguageContext } from '../context/LanguageContext';
 import { LanguageSelector } from '../components/LanguageSelector';
+import { LanguageContext } from '../context/LanguageContext';
 import { Meta } from '../layout/Meta';
 import { AppConfig } from '../utils/AppConfig';
 import { Banner } from './Banner';
