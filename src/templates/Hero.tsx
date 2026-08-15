@@ -35,7 +35,9 @@ const Hero = () => {
               {isPersian ? (
                 <>
                   {'آموزش زبان انگلیسی\n'}
-                  <span className="text-primary-500">به روشی ساده و کاربردی</span>
+                  <span className="text-primary-500">
+                    به روشی ساده و کاربردی
+                  </span>
                 </>
               ) : (
                 <>
