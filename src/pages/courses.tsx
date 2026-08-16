@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useState } from 'react';
 
 import { Button } from '../button/Button';
@@ -45,119 +44,51 @@ const Courses = () => {
 
   const price = calculatePrice();
 
+  // Temporary videos - replace these later with the actual course videos.
+  const youtubeVideo = 'https://www.youtube.com/embed/X1WpQInh1Dw';
+  const aparatVideo =
+    'https://www.aparat.com/video/video/embed/videohash/npu751w/vt/frame';
+
+  const videoUrl = isPersian ? aparatVideo : youtubeVideo;
+
   return (
-    <main className="min-h-screen bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300">
-      <Section yPadding="pt-16 pb-10">
+    <main
+      className="min-h-screen bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300"
+      dir={isPersian ? 'rtl' : 'ltr'}
+    >
+      {/* Page Header */}
+      <Section yPadding="pt-16 pb-8">
         <div className="text-center">
           <h1 className="text-5xl font-bold text-gray-900 dark:text-white">
             {isPersian ? 'دوره‌های آموزش زبان انگلیسی' : 'English Courses'}
           </h1>
 
-          <p className="mx-auto mt-6 max-w-3xl text-xl leading-9 text-gray-600 dark:text-gray-300">
+          <p className="mx-auto mt-5 max-w-3xl text-xl leading-9 text-gray-600 dark:text-gray-300">
             {isPersian
-              ? 'دوره آموزشی مناسب خود را بر اساس سطح و هدف یادگیری انتخاب کنید.'
+              ? 'دوره مناسب خود را انتخاب کنید و برنامه‌ای متناسب با اهداف و نیازهای خود داشته باشید.'
               : 'Choose the course that matches your goals and receive a personalized learning plan designed around your needs.'}
           </p>
         </div>
       </Section>
 
-      <Section yPadding="py-10">
-        <div className="space-y-24">
-          {/* General English */}
-          <div className="flex flex-col items-center gap-10 md:flex-row">
-            <div className="w-full md:w-1/2">
-              <Image
-                src="/assets/images/feature 1.png"
-                alt="Personal English course"
-                width={800}
-                height={600}
-                className="w-full rounded-[40px] shadow-lg"
-              />
-            </div>
-
-            <div className="w-full md:w-1/2">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-                {isPersian
-                  ? 'دوره شخصی زبان انگلیسی'
-                  : 'Personalized General English'}
-              </h2>
-
-              <p className="mt-6 text-xl leading-9 text-gray-600 dark:text-gray-300">
-                {isPersian
-                  ? 'یک دوره کاملاً شخصی‌سازی‌شده برای تقویت مهارت‌های اصلی زبان انگلیسی. محتوای کلاس بر اساس سطح، نیازها و اهداف شما انتخاب می‌شود و تمرکز ویژه‌ای بر مکالمه، واژگان، گرامر و استفاده طبیعی از زبان دارد.'
-                  : 'A fully personalized English course designed around your level, needs, and goals. Lessons focus on practical communication, vocabulary, grammar, speaking, and using English naturally in real-life situations.'}
-              </p>
-            </div>
-          </div>
-
-          {/* IELTS */}
-          <div className="flex flex-col items-center gap-10 md:flex-row-reverse">
-            <div className="w-full md:w-1/2">
-              <Image
-                src="/assets/images/feature 2.png"
-                alt="Personal IELTS course"
-                width={800}
-                height={600}
-                className="w-full rounded-[40px] shadow-lg"
-              />
-            </div>
-
-            <div className="w-full md:w-1/2">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-                {isPersian ? 'دوره شخصی آیلتس' : 'Personalized IELTS Course'}
-              </h2>
-
-              <p className="mt-6 text-xl leading-9 text-gray-600 dark:text-gray-300">
-                {isPersian
-                  ? 'برنامه‌ای شخصی‌سازی‌شده برای آمادگی آزمون آیلتس، با تمرکز بر مهارت‌های Speaking، Writing، Reading و Listening. نقاط ضعف شما شناسایی شده و تمرین‌ها بر اساس هدف نمره‌ای شما طراحی می‌شوند.'
-                  : 'A personalized IELTS preparation program focused on Speaking, Writing, Reading, and Listening. Lessons are adapted to your current level, weaknesses, and target score.'}
-              </p>
-            </div>
-          </div>
-
-          {/* TOEFL */}
-          <div className="flex flex-col items-center gap-10 md:flex-row">
-            <div className="w-full md:w-1/2">
-              <Image
-                src="/assets/images/feature 3.png"
-                alt="Personal TOEFL course"
-                width={800}
-                height={600}
-                className="w-full rounded-[40px] shadow-lg"
-              />
-            </div>
-
-            <div className="w-full md:w-1/2">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-                {isPersian ? 'دوره شخصی تافل' : 'Personalized TOEFL Course'}
-              </h2>
-
-              <p className="mt-6 text-xl leading-9 text-gray-600 dark:text-gray-300">
-                {isPersian
-                  ? 'دوره‌ای شخصی‌سازی‌شده برای آمادگی آزمون تافل و تقویت مهارت‌های مورد نیاز آزمون. تمرکز کلاس‌ها بر روی مهارت‌های چهارگانه و استراتژی‌های کاربردی برای رسیدن به نمره مورد نظر شماست.'
-                  : 'A personalized TOEFL preparation course designed to strengthen the four key skills and develop practical strategies for achieving your target score.'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Course Selection */}
-      <Section yPadding="py-20">
-        <div className="mx-auto max-w-3xl rounded-[40px] bg-gray-100 p-8 shadow-xl dark:bg-gray-800 md:p-12">
+      {/* Registration Form */}
+      <Section yPadding="py-8">
+        <div className="mx-auto max-w-3xl rounded-[32px] bg-gray-100 p-8 shadow-xl dark:bg-gray-800 md:p-10">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-              {isPersian ? 'انتخاب دوره و برنامه کلاس' : 'Choose Your Course'}
+              {isPersian
+                ? 'ثبت‌نام و انتخاب برنامه'
+                : 'Registration & Course Selection'}
             </h2>
 
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+            <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
               {isPersian
-                ? 'اطلاعات خود را وارد کنید تا هزینه تقریبی برنامه شما محاسبه شود.'
+                ? 'اطلاعات خود را وارد کنید و دوره و برنامه هفتگی مورد نظر خود را انتخاب کنید.'
                 : 'Enter your information and choose your preferred course and weekly schedule.'}
             </p>
           </div>
 
-          <form className="mt-10 space-y-6">
+          <form className="mt-8 space-y-5">
             {/* Full Name */}
             <div>
               <label
@@ -282,27 +213,127 @@ const Courses = () => {
 
             {/* Price */}
             {price > 0 && (
-              <div className="rounded-2xl bg-primary-100 p-6 text-center dark:bg-primary-900">
+              <div className="rounded-2xl bg-primary-100 p-5 text-center dark:bg-primary-900">
                 <p className="text-lg text-gray-700 dark:text-gray-200">
                   {isPersian ? 'هزینه تقریبی:' : 'Estimated Price:'}
                 </p>
 
-                <p className="mt-2 text-4xl font-bold text-primary-700 dark:text-primary-200">
+                <p className="mt-1 text-4xl font-bold text-primary-700 dark:text-primary-200">
                   ${price}
                 </p>
 
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                   {isPersian ? 'در ماه' : 'per month'}
                 </p>
               </div>
             )}
 
-            <div className="pt-4 text-center">
+            <div className="pt-2 text-center">
               <Button xl>
                 {isPersian ? 'ثبت درخواست' : 'Request This Course'}
               </Button>
             </div>
           </form>
+        </div>
+      </Section>
+
+      {/* Course Videos & Descriptions */}
+      <Section yPadding="py-10">
+        <div className="space-y-12">
+          {/* General English */}
+          <article className="flex flex-col items-center gap-8 md:flex-row">
+            <div className="w-full shrink-0 md:w-[40%]">
+              <div className="aspect-video overflow-hidden rounded-[28px] shadow-lg">
+                <iframe
+                  className="size-full"
+                  src={videoUrl}
+                  title={
+                    isPersian
+                      ? 'معرفی دوره زبان انگلیسی عمومی'
+                      : 'Personalized General English Course'
+                  }
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+
+            <div className="w-full md:w-[60%]">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                {isPersian
+                  ? 'دوره شخصی زبان انگلیسی'
+                  : 'Personalized General English'}
+              </h2>
+
+              <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
+                {isPersian
+                  ? 'یک دوره کاملاً شخصی‌سازی‌شده برای تقویت مهارت‌های اصلی زبان انگلیسی. محتوای کلاس بر اساس سطح، نیازها و اهداف شما انتخاب می‌شود و تمرکز ویژه‌ای بر مکالمه، واژگان، گرامر و استفاده طبیعی از زبان دارد.'
+                  : 'A fully personalized English course designed around your level, needs, and goals. Lessons focus on practical communication, vocabulary, grammar, speaking, and using English naturally in real-life situations.'}
+              </p>
+            </div>
+          </article>
+
+          {/* IELTS */}
+          <article className="flex flex-col items-center gap-8 md:flex-row">
+            <div className="w-full shrink-0 md:w-[40%]">
+              <div className="aspect-video overflow-hidden rounded-[28px] shadow-lg">
+                <iframe
+                  className="size-full"
+                  src={videoUrl}
+                  title={
+                    isPersian
+                      ? 'معرفی دوره شخصی آیلتس'
+                      : 'Personalized IELTS Course'
+                  }
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+
+            <div className="w-full md:w-[60%]">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                {isPersian ? 'دوره شخصی آیلتس' : 'Personalized IELTS Course'}
+              </h2>
+
+              <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
+                {isPersian
+                  ? 'برنامه‌ای شخصی‌سازی‌شده برای آمادگی آزمون آیلتس، با تمرکز بر مهارت‌های Speaking، Writing، Reading و Listening. نقاط ضعف شما شناسایی شده و تمرین‌ها بر اساس هدف نمره‌ای شما طراحی می‌شوند.'
+                  : 'A personalized IELTS preparation program focused on Speaking, Writing, Reading, and Listening. Lessons are adapted to your current level, weaknesses, and target score.'}
+              </p>
+            </div>
+          </article>
+
+          {/* TOEFL */}
+          <article className="flex flex-col items-center gap-8 md:flex-row">
+            <div className="w-full shrink-0 md:w-[40%]">
+              <div className="aspect-video overflow-hidden rounded-[28px] shadow-lg">
+                <iframe
+                  className="size-full"
+                  src={videoUrl}
+                  title={
+                    isPersian
+                      ? 'معرفی دوره شخصی تافل'
+                      : 'Personalized TOEFL Course'
+                  }
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+
+            <div className="w-full md:w-[60%]">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+                {isPersian ? 'دوره شخصی تافل' : 'Personalized TOEFL Course'}
+              </h2>
+
+              <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
+                {isPersian
+                  ? 'دوره‌ای شخصی‌سازی‌شده برای آمادگی آزمون تافل و تقویت مهارت‌های مورد نیاز آزمون. تمرکز کلاس‌ها بر روی مهارت‌های چهارگانه و استراتژی‌های کاربردی برای رسیدن به نمره مورد نظر شماست.'
+                  : 'A personalized TOEFL preparation course designed to strengthen the four key skills and develop practical strategies for achieving your target score.'}
+              </p>
+            </div>
+          </article>
         </div>
       </Section>
     </main>
