@@ -28,9 +28,15 @@ const TrialSession = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-  ) => {
+  const submitButtonText = isSubmitting
+    ? isPersian
+      ? 'در حال ارسال...'
+      : 'Sending...'
+    : isPersian
+      ? 'درخواست جلسه آزمایشی'
+      : 'Request Free Trial';
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setIsSubmitting(true);
@@ -47,16 +53,13 @@ const TrialSession = () => {
       formData.append('trial_type', trialType);
       formData.append('additional_info', additionalInfo);
 
-      const response = await fetch(
-        'https://formspree.io/f/mnpagakp',
-        {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Accept: 'application/json',
-          },
+      const response = await fetch('https://formspree.io/f/mnpagakp', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Accept: 'application/json',
         },
-      );
+      });
 
       if (!response.ok) {
         throw new Error(
@@ -67,7 +70,6 @@ const TrialSession = () => {
       }
 
       setSuccess(true);
-
       setName('');
       setPhone('');
       setCountry('');
@@ -75,15 +77,15 @@ const TrialSession = () => {
       setTrialType('');
       setAdditionalInfo('');
     } catch (submitError) {
-      console.error(submitError);
-
-      setError(
-        submitError instanceof Error
-          ? submitError.message
-          : isPersian
+      if (submitError instanceof Error) {
+        setError(submitError.message);
+      } else {
+        setError(
+          isPersian
             ? 'ارسال درخواست با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
             : 'Something went wrong. Please try again.',
-      );
+        );
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -118,9 +120,7 @@ const TrialSession = () => {
           <div className="rounded-[32px] bg-gray-100 p-8 shadow-xl dark:bg-gray-800 md:p-10">
             <div className="text-center">
               <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-                {isPersian
-                  ? 'جلسه آزمایشی رایگان'
-                  : 'Free Trial Session'}
+                {isPersian ? 'جلسه آزمایشی رایگان' : 'Free Trial Session'}
               </h1>
 
               <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-gray-600 dark:text-gray-300">
@@ -130,10 +130,7 @@ const TrialSession = () => {
               </p>
             </div>
 
-            <form
-              onSubmit={handleSubmit}
-              className="mt-8 space-y-6"
-            >
+            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
               <div>
                 <label
                   htmlFor="name"
@@ -237,15 +234,11 @@ const TrialSession = () => {
                   </option>
 
                   <option value="ielts">
-                    {isPersian
-                      ? 'دوره شخصی آیلتس'
-                      : 'Personal IELTS'}
+                    {isPersian ? 'دوره شخصی آیلتس' : 'Personal IELTS'}
                   </option>
 
                   <option value="toefl">
-                    {isPersian
-                      ? 'دوره شخصی تافل'
-                      : 'Personal TOEFL'}
+                    {isPersian ? 'دوره شخصی تافل' : 'Personal TOEFL'}
                   </option>
                 </select>
               </div>
@@ -332,9 +325,7 @@ const TrialSession = () => {
                   id="additionalInfo"
                   name="additional_info"
                   value={additionalInfo}
-                  onChange={(event) =>
-                    setAdditionalInfo(event.target.value)
-                  }
+                  onChange={(event) => setAdditionalInfo(event.target.value)}
                   rows={5}
                   placeholder={
                     isPersian
@@ -360,15 +351,7 @@ const TrialSession = () => {
               )}
 
               <div className="pt-2 text-center">
-                <Button xl>
-                  {isSubmitting
-                    ? isPersian
-                      ? 'در حال ارسال...'
-                      : 'Sending...'
-                    : isPersian
-                      ? 'درخواست جلسه آزمایشی'
-                      : 'Request Free Trial'}
-                </Button>
+                <Button xl>{submitButtonText}</Button>
               </div>
             </form>
           </div>
