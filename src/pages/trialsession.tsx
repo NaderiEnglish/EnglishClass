@@ -341,7 +341,9 @@ const TrialSession = () => {
               )}
 
               <div className="pt-2 text-center">
-                <Button xl>{submitButtonText}</Button>
+                <Button xl type="submit">
+                  {submitButtonText}
+                </Button>
               </div>
             </form>
           </div>
