@@ -17,10 +17,6 @@ const Courses = () => {
   const [course, setCourse] = useState<CourseType | ''>('');
   const [sessions, setSessions] = useState<SessionsPerWeek | ''>('');
 
-  /*
-   * Temporary prices.
-   * We can replace these with your real prices later.
-   */
   const prices = {
     general: {
       2: 100,
@@ -51,7 +47,6 @@ const Courses = () => {
 
   return (
     <main className="min-h-screen bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300">
-      {/* Page Header */}
       <Section yPadding="pt-16 pb-10">
         <div className="text-center">
           <h1 className="text-5xl font-bold text-gray-900 dark:text-white">
@@ -60,13 +55,12 @@ const Courses = () => {
 
           <p className="mx-auto mt-6 max-w-3xl text-xl leading-9 text-gray-600 dark:text-gray-300">
             {isPersian
-              ? 'دوره آموزشی مناسب خود را انتخاب کنید و برنامه‌ای متناسب با اهداف و نیازهای خود داشته باشید.'
+              ? 'دوره آموزشی مناسب خود را بر اساس سطح و هدف یادگیری انتخاب کنید.'
               : 'Choose the course that matches your goals and receive a personalized learning plan designed around your needs.'}
           </p>
         </div>
       </Section>
 
-      {/* Courses */}
       <Section yPadding="py-10">
         <div className="space-y-24">
           {/* General English */}
@@ -110,9 +104,7 @@ const Courses = () => {
 
             <div className="w-full md:w-1/2">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-                {isPersian
-                  ? 'دوره شخصی آیلتس'
-                  : 'Personalized IELTS Course'}
+                {isPersian ? 'دوره شخصی آیلتس' : 'Personalized IELTS Course'}
               </h2>
 
               <p className="mt-6 text-xl leading-9 text-gray-600 dark:text-gray-300">
@@ -137,9 +129,7 @@ const Courses = () => {
 
             <div className="w-full md:w-1/2">
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-                {isPersian
-                  ? 'دوره شخصی تافل'
-                  : 'Personalized TOEFL Course'}
+                {isPersian ? 'دوره شخصی تافل' : 'Personalized TOEFL Course'}
               </h2>
 
               <p className="mt-6 text-xl leading-9 text-gray-600 dark:text-gray-300">
@@ -168,7 +158,7 @@ const Courses = () => {
           </div>
 
           <form className="mt-10 space-y-6">
-            {/* Name */}
+            {/* Full Name */}
             <div>
               <label
                 htmlFor="name"
@@ -244,9 +234,7 @@ const Courses = () => {
                 </option>
 
                 <option value="toefl">
-                  {isPersian
-                    ? 'تافل فشرده شخصی'
-                    : 'Personalized Compact TOEFL'}
+                  {isPersian ? 'تافل فشرده شخصی' : 'Personalized Compact TOEFL'}
                 </option>
               </select>
             </div>
@@ -257,9 +245,7 @@ const Courses = () => {
                 htmlFor="sessions"
                 className="mb-2 block text-lg font-medium text-gray-900 dark:text-white"
               >
-                {isPersian
-                  ? 'تعداد جلسات در هفته'
-                  : 'Sessions Per Week'}
+                {isPersian ? 'تعداد جلسات در هفته' : 'Sessions Per Week'}
               </label>
 
               <select
