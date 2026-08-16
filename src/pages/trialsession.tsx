@@ -100,10 +100,7 @@ const TrialSession = () => {
         <Section yPadding="py-6">
           <NavbarTwoColumns logo={<Logo xl />}>
             <li>
-              <Link
-                href="/"
-                className="text-gray-700 dark:text-gray-200"
-              >
+              <Link href="/" className="text-gray-700 dark:text-gray-200">
                 {isPersian ? 'خانه' : 'Home'}
               </Link>
             </li>
@@ -147,9 +144,7 @@ const TrialSession = () => {
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                   placeholder={
-                    isPersian
-                      ? 'نام و نام خانوادگی'
-                      : 'Enter your full name'
+                    isPersian ? 'نام و نام خانوادگی' : 'Enter your full name'
                   }
                   className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
                 />
@@ -171,9 +166,7 @@ const TrialSession = () => {
                   value={phone}
                   onChange={(event) => setPhone(event.target.value)}
                   placeholder={
-                    isPersian
-                      ? 'شماره تلفن'
-                      : 'Enter your phone number'
+                    isPersian ? 'شماره تلفن' : 'Enter your phone number'
                   }
                   className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
                 />
@@ -184,9 +177,7 @@ const TrialSession = () => {
                   htmlFor="country"
                   className="mb-2 block text-lg font-medium text-gray-900 dark:text-white"
                 >
-                  {isPersian
-                    ? 'کشور محل اقامت'
-                    : 'Country of Residence'}
+                  {isPersian ? 'کشور محل اقامت' : 'Country of Residence'}
                 </label>
 
                 <input
@@ -197,9 +188,7 @@ const TrialSession = () => {
                   value={country}
                   onChange={(event) => setCountry(event.target.value)}
                   placeholder={
-                    isPersian
-                      ? 'کشور محل اقامت'
-                      : 'Enter your country'
+                    isPersian ? 'کشور محل اقامت' : 'Enter your country'
                   }
                   className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
                 />
@@ -245,9 +234,7 @@ const TrialSession = () => {
 
               <div>
                 <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
-                  {isPersian
-                    ? 'نوع جلسه آزمایشی'
-                    : 'Choose Your Trial Session'}
+                  {isPersian ? 'نوع جلسه آزمایشی' : 'Choose Your Trial Session'}
                 </h2>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -268,9 +255,7 @@ const TrialSession = () => {
                     />
 
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      {isPersian
-                        ? 'تعیین سطح زبان'
-                        : 'Level Assessment'}
+                      {isPersian ? 'تعیین سطح زبان' : 'Level Assessment'}
                     </h3>
 
                     <p className="mt-2 text-gray-600 dark:text-gray-300">
@@ -316,9 +301,7 @@ const TrialSession = () => {
                   htmlFor="additionalInfo"
                   className="mb-2 block text-lg font-medium text-gray-900 dark:text-white"
                 >
-                  {isPersian
-                    ? 'اطلاعات تکمیلی'
-                    : 'Additional Information'}
+                  {isPersian ? 'اطلاعات تکمیلی' : 'Additional Information'}
                 </label>
 
                 <textarea
