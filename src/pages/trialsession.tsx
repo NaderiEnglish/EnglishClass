@@ -6,6 +6,7 @@ import { Button } from '../button/Button';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { useLanguage } from '../context/LanguageContext';
 import { Section } from '../layout/Section';
+import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
 import { Footer } from '../templates/Footer';
 import { Logo } from '../templates/Logo';
 
@@ -95,9 +96,20 @@ const TrialSession = () => {
     >
       <Background color="bg-gray-100 dark:bg-gray-900">
         <Section yPadding="py-6">
-          <Navbar
-            isPersian={isPersian}
-          />
+          <NavbarTwoColumns logo={<Logo xl />}>
+            <li>
+              <Link
+                href="/"
+                className="text-gray-700 dark:text-gray-200"
+              >
+                {isPersian ? 'خانه' : 'Home'}
+              </Link>
+            </li>
+
+            <li>
+              <ThemeToggle />
+            </li>
+          </NavbarTwoColumns>
         </Section>
       </Background>
 
@@ -118,7 +130,10 @@ const TrialSession = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+            <form
+              onSubmit={handleSubmit}
+              className="mt-8 space-y-6"
+            >
               <div>
                 <label
                   htmlFor="name"
@@ -364,23 +379,5 @@ const TrialSession = () => {
     </main>
   );
 };
-
-type NavbarProps = {
-  isPersian: boolean;
-};
-
-const Navbar = ({ isPersian }: NavbarProps) => (
-  <NavbarTwoColumns logo={<Logo xl />}>
-    <li>
-      <Link href="/" className="text-gray-700 dark:text-gray-200">
-        {isPersian ? 'خانه' : 'Home'}
-      </Link>
-    </li>
-
-    <li>
-      <ThemeToggle />
-    </li>
-  </NavbarTwoColumns>
-);
 
 export default TrialSession;
