@@ -21,7 +21,6 @@ const Hero = () => {
           <li>
             <ThemeToggle />
           </li>
-
           <li>
             <Menu />
           </li>
@@ -59,7 +58,6 @@ const Hero = () => {
                   {isPersian ? 'جلسه آزمایشی رایگان' : 'Free Trial Session'}
                 </Button>
               </Link>
-
               <Link href="#courses">
                 <Button xl>
                   {isPersian ? 'مشاهده دوره‌ها' : 'View Courses'}
