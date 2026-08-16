@@ -14,7 +14,7 @@ const Logo = (props: ILogoProps) => {
         height={size}
         viewBox="0 0 48 48"
         xmlns="http://www.w3.org/2000/svg"
-        className="mr-2 flex-shrink-0"
+        className="mr-2 shrink-0"
         aria-label="Naderi English logo"
       >
         <rect
@@ -26,10 +26,7 @@ const Logo = (props: ILogoProps) => {
           className="fill-primary-500"
         />
 
-        <path
-          d="M12 42 L9 47 L18 43"
-          className="fill-primary-500"
-        />
+        <path d="M12 42 L9 47 L18 43" className="fill-primary-500" />
 
         <path
           d="M11 31V17H14.5L23 26.5V17H27V31H23.5L15 21.5V31H11Z"
