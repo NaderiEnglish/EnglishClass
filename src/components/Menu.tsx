@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { ThemeToggle } from './ThemeToggle';
 import { useLanguage } from '../context/LanguageContext';
 
 const Menu = () => {
@@ -92,16 +91,6 @@ const Menu = () => {
               </li>
             </ul>
           </nav>
-
-          <div className="my-3 border-t border-gray-200 dark:border-gray-700" />
-
-          <div className="flex items-center justify-between px-4 py-2">
-            <span className="text-gray-700 dark:text-gray-200">
-              {isPersian ? 'حالت شب' : 'Dark Mode'}
-            </span>
-
-            <ThemeToggle />
-          </div>
         </div>
       )}
     </div>
