@@ -25,11 +25,13 @@ const Hero = () => {
               {isPersian ? 'گیت‌هاب' : 'GitHub'}
             </Link>
           </li>
+
           <li>
             <Link href="/" className="text-gray-700 dark:text-gray-200">
               {isPersian ? 'ورود' : 'Sign in'}
             </Link>
           </li>
+
           <li>
             <ThemeToggle />
           </li>
@@ -50,7 +52,9 @@ const Hero = () => {
               ) : (
                 <>
                   {'Learn English\n'}
-                  <span className="text-primary-500">the practical way</span>
+                  <span className="text-primary-500">
+                    the practical way
+                  </span>
                 </>
               )}
             </>
@@ -67,7 +71,7 @@ const Hero = () => {
                   {isPersian ? 'جلسه آزمایشی رایگان' : 'Free Trial Session'}
                 </Button>
               </Link>
-          
+
               <Link href="#courses">
                 <Button xl>
                   {isPersian ? 'مشاهده دوره‌ها' : 'View Courses'}
