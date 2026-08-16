@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
-import { ThemeToggle } from '../components/ThemeToggle';
 import { Menu } from '../components/Menu';
+import { ThemeToggle } from '../components/ThemeToggle';
 import { useLanguage } from '../context/LanguageContext';
 import { HeroOneButton } from '../hero/HeroOneButton';
 import { Section } from '../layout/Section';
@@ -17,15 +17,15 @@ const Hero = () => {
   return (
     <Background color="bg-gray-100 dark:bg-gray-900">
       <Section yPadding="py-6">
-      <NavbarTwoColumns logo={<Logo xl />}>
-        <li>
-          <ThemeToggle />
-        </li>
-      
-        <li>
-          <Menu />
-        </li>
-      </NavbarTwoColumns>
+        <NavbarTwoColumns logo={<Logo xl />}>
+          <li>
+            <ThemeToggle />
+          </li>
+
+          <li>
+            <Menu />
+          </li>
+        </NavbarTwoColumns>
       </Section>
 
       <Section yPadding="pt-20 pb-32">
