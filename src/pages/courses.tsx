@@ -1,14 +1,14 @@
-import { useState } from 'react';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { useLanguage } from '../context/LanguageContext';
+import { Section } from '../layout/Section';
+import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
 import { Footer } from '../templates/Footer';
 import { Logo } from '../templates/Logo';
-import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
-import { Section } from '../layout/Section';
 
 type CourseType = 'general' | 'ielts' | 'toefl';
 type SessionsPerWeek = 2 | 3 | 4;
@@ -50,7 +50,10 @@ const Courses = () => {
 
   const price = calculatePrice();
 
+  // Temporary videos.
+  // Replace these later with the actual course videos.
   const youtubeVideo = 'https://www.youtube.com/embed/X1WpQInh1Dw';
+
   const aparatVideo =
     'https://www.aparat.com/video/video/embed/videohash/npu751w/vt/frame';
 
@@ -66,10 +69,7 @@ const Courses = () => {
         <Section yPadding="py-6">
           <NavbarTwoColumns logo={<Logo xl />}>
             <li>
-              <Link
-                href="/"
-                className="text-gray-700 dark:text-gray-200"
-              >
+              <Link href="/" className="text-gray-700 dark:text-gray-200">
                 {isPersian ? 'خانه' : 'Home'}
               </Link>
             </li>
@@ -247,7 +247,7 @@ const Courses = () => {
         </div>
       </Section>
 
-      {/* Courses */}
+      {/* Course Videos */}
       <Section yPadding="py-8">
         <div className="space-y-12">
           {/* General English */}
@@ -347,7 +347,6 @@ const Courses = () => {
         </div>
       </Section>
 
-      {/* Footer */}
       <Footer />
     </main>
   );
