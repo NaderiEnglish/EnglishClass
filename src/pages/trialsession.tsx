@@ -28,13 +28,19 @@ const TrialSession = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  const submitButtonText = isSubmitting
-    ? isPersian
-      ? 'در حال ارسال...'
-      : 'Sending...'
-    : isPersian
-      ? 'درخواست جلسه آزمایشی'
-      : 'Request Free Trial';
+  let submitButtonText = 'Request Free Trial';
+
+  if (isPersian) {
+    submitButtonText = 'درخواست جلسه آزمایشی';
+  }
+
+  if (isSubmitting && isPersian) {
+    submitButtonText = 'در حال ارسال...';
+  }
+
+  if (isSubmitting && !isPersian) {
+    submitButtonText = 'Sending...';
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,6 +76,7 @@ const TrialSession = () => {
       }
 
       setSuccess(true);
+
       setName('');
       setPhone('');
       setCountry('');
