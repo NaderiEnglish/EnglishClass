@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 type ILogoProps = {
@@ -8,16 +7,11 @@ type ILogoProps = {
 const Logo = (props: ILogoProps) => {
   const router = useRouter();
 
-  const width = props.xl ? 180 : 140;
-  const height = props.xl ? 60 : 48;
-
   return (
-    <Image
+    <img
       src={`${router.basePath}/assets/images/logo.svg`}
       alt="Naderi English"
-      width={width}
-      height={height}
-      priority
+      className={props.xl ? 'h-12 w-auto' : 'h-9 w-auto'}
     />
   );
 };
