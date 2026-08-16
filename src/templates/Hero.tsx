@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { Menu } from '../components/Menu';
 import { useLanguage } from '../context/LanguageContext';
 import { HeroOneButton } from '../hero/HeroOneButton';
 import { Section } from '../layout/Section';
@@ -16,26 +17,15 @@ const Hero = () => {
   return (
     <Background color="bg-gray-100 dark:bg-gray-900">
       <Section yPadding="py-6">
-        <NavbarTwoColumns logo={<Logo xl />}>
-          <li>
-            <Link
-              href="https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template"
-              className="text-gray-700 dark:text-gray-200"
-            >
-              {isPersian ? 'گیت‌هاب' : 'GitHub'}
-            </Link>
-          </li>
-
-          <li>
-            <Link href="/" className="text-gray-700 dark:text-gray-200">
-              {isPersian ? 'ورود' : 'Sign in'}
-            </Link>
-          </li>
-
-          <li>
-            <ThemeToggle />
-          </li>
-        </NavbarTwoColumns>
+      <NavbarTwoColumns logo={<Logo xl />}>
+        <li>
+          <ThemeToggle />
+        </li>
+      
+        <li>
+          <Menu />
+        </li>
+      </NavbarTwoColumns>
       </Section>
 
       <Section yPadding="pt-20 pb-32">
