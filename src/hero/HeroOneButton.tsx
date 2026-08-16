@@ -17,7 +17,6 @@ const HeroOneButton = (props: IHeroOneButtonProps) => (
     </div>
 
     {props.button}
-    {props.button}
   </header>
 );
 
