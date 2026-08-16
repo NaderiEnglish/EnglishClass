@@ -1,29 +1,20 @@
-import { useLanguage } from '../context/LanguageContext';
-
 type ILogoProps = {
   xl?: boolean;
 };
 
 const Logo = (props: ILogoProps) => {
-  const { language } = useLanguage();
-  const isPersian = language === 'fa';
-
   const size = props.xl ? 48 : 38;
   const titleSize = props.xl ? 'text-xl' : 'text-base';
   const subtitleSize = props.xl ? 'text-xs' : 'text-[10px]';
 
   return (
-    <div
-      className={`inline-flex items-center ${
-        isPersian ? 'flex-row-reverse' : 'flex-row'
-      }`}
-    >
+    <div className="inline-flex items-center flex-row" dir="ltr">
       <svg
         width={size}
         height={size}
         viewBox="0 0 48 48"
         xmlns="http://www.w3.org/2000/svg"
-        className={isPersian ? 'ml-2 shrink-0' : 'mr-2 shrink-0'}
+        className="mr-2 shrink-0"
         aria-label="Naderi English logo"
       >
         <rect
@@ -48,12 +39,7 @@ const Logo = (props: ILogoProps) => {
         />
       </svg>
 
-      <div
-        className={`flex flex-col leading-none ${
-          isPersian ? 'items-end text-right' : 'items-start text-left'
-        }`}
-        dir="ltr"
-      >
+      <div className="flex flex-col items-start text-left leading-none">
         <span
           className={`${titleSize} font-bold tracking-tight text-gray-900 dark:text-white`}
         >
