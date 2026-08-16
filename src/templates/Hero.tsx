@@ -61,11 +61,19 @@ const Hero = () => {
               : 'Personalized private English lessons for learners at different levels, including IELTS and TOEFL preparation.'
           }
           button={
-            <Link href="#contact">
-              <Button xl>
-                {isPersian ? 'جلسه آزمایشی رایگان' : 'Free Trial Session'}
-              </Button>
-            </Link>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="#contact">
+                <Button xl>
+                  {isPersian ? 'جلسه آزمایشی رایگان' : 'Free Trial Session'}
+                </Button>
+              </Link>
+          
+              <Link href="#courses">
+                <Button xl>
+                  {isPersian ? 'مشاهده دوره‌ها' : 'View Courses'}
+                </Button>
+              </Link>
+            </div>
           }
         />
       </Section>
