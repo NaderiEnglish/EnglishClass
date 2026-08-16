@@ -53,12 +53,12 @@ const Hero = () => {
           }
           button={
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="#contact">
+              <Link href="/trialsession">
                 <Button xl>
                   {isPersian ? 'جلسه آزمایشی رایگان' : 'Free Trial Session'}
                 </Button>
               </Link>
-              <Link href="#courses">
+              <Link href="/courses">
                 <Button xl>
                   {isPersian ? 'مشاهده دوره‌ها' : 'View Courses'}
                 </Button>
