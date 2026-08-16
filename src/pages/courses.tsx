@@ -1,7 +1,13 @@
 import { useState } from 'react';
+import Link from 'next/link';
 
+import { Background } from '../background/Background';
 import { Button } from '../button/Button';
+import { ThemeToggle } from '../components/ThemeToggle';
 import { useLanguage } from '../context/LanguageContext';
+import { Footer } from '../templates/Footer';
+import { Logo } from '../templates/Logo';
+import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
 import { Section } from '../layout/Section';
 
 type CourseType = 'general' | 'ielts' | 'toefl';
@@ -44,7 +50,6 @@ const Courses = () => {
 
   const price = calculatePrice();
 
-  // Temporary videos - replace these later with the actual course videos.
   const youtubeVideo = 'https://www.youtube.com/embed/X1WpQInh1Dw';
   const aparatVideo =
     'https://www.aparat.com/video/video/embed/videohash/npu751w/vt/frame';
@@ -56,30 +61,35 @@ const Courses = () => {
       className="min-h-screen bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300"
       dir={isPersian ? 'rtl' : 'ltr'}
     >
-      {/* Page Header */}
-      <Section yPadding="pt-16 pb-8">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold text-gray-900 dark:text-white">
-            {isPersian ? 'دوره‌های آموزش زبان انگلیسی' : 'English Courses'}
-          </h1>
+      {/* Header */}
+      <Background color="bg-gray-100 dark:bg-gray-900">
+        <Section yPadding="py-6">
+          <NavbarTwoColumns logo={<Logo xl />}>
+            <li>
+              <Link
+                href="/"
+                className="text-gray-700 dark:text-gray-200"
+              >
+                {isPersian ? 'خانه' : 'Home'}
+              </Link>
+            </li>
 
-          <p className="mx-auto mt-5 max-w-3xl text-xl leading-9 text-gray-600 dark:text-gray-300">
-            {isPersian
-              ? 'دوره مناسب خود را انتخاب کنید و برنامه‌ای متناسب با اهداف و نیازهای خود داشته باشید.'
-              : 'Choose the course that matches your goals and receive a personalized learning plan designed around your needs.'}
-          </p>
-        </div>
-      </Section>
+            <li>
+              <ThemeToggle />
+            </li>
+          </NavbarTwoColumns>
+        </Section>
+      </Background>
 
       {/* Registration Form */}
-      <Section yPadding="py-8">
+      <Section yPadding="pt-12 pb-8">
         <div className="mx-auto max-w-3xl rounded-[32px] bg-gray-100 p-8 shadow-xl dark:bg-gray-800 md:p-10">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               {isPersian
                 ? 'ثبت‌نام و انتخاب برنامه'
                 : 'Registration & Course Selection'}
-            </h2>
+            </h1>
 
             <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
               {isPersian
@@ -237,8 +247,8 @@ const Courses = () => {
         </div>
       </Section>
 
-      {/* Course Videos & Descriptions */}
-      <Section yPadding="py-10">
+      {/* Courses */}
+      <Section yPadding="py-8">
         <div className="space-y-12">
           {/* General English */}
           <article className="flex flex-col items-center gap-8 md:flex-row">
@@ -336,6 +346,9 @@ const Courses = () => {
           </article>
         </div>
       </Section>
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 };
