@@ -52,9 +52,7 @@ const Hero = () => {
               ) : (
                 <>
                   {'Learn English\n'}
-                  <span className="text-primary-500">
-                    the practical way
-                  </span>
+                  <span className="text-primary-500">the practical way</span>
                 </>
               )}
             </>
