@@ -17,10 +17,7 @@ type SessionsPerWeek = 2 | 3 | 4;
 const GOOGLE_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSfOkyT9Umn468g__lp5o5uCH3FLZrCB2SNDBHsCuFXW0wkJGQ/formResponse';
 
-const getCourseValue = (
-  course: CourseType,
-  isPersian: boolean,
-): string => {
+const getCourseValue = (course: CourseType, isPersian: boolean): string => {
   if (course === 'general') {
     return isPersian
       ? 'انگلیسی عمومی فشرده شخصی'
@@ -169,7 +166,17 @@ const Courses = () => {
     'https://www.aparat.com/video/video/embed/videohash/npu751w/vt/frame';
 
   const videoUrl = isPersian ? aparatVideo : youtubeVideo;
-
+  
+  let buttonText = 'Request This Course';
+  
+  if (isPersian) {
+    buttonText = 'ثبت درخواست';
+  }
+  
+  if (isSubmitting) {
+    buttonText = isPersian ? 'در حال ارسال...' : 'Sending...';
+  }
+  
   return (
     <main
       className="min-h-screen bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300"
@@ -375,15 +382,9 @@ const Courses = () => {
             )}
 
             <div className="pt-2 text-center">
-              <Button xl type="submit">
-                {isSubmitting
-                  ? isPersian
-                    ? 'در حال ارسال...'
-                    : 'Sending...'
-                  : isPersian
-                    ? 'ثبت درخواست'
-                    : 'Request This Course'}
-              </Button>
+            <Button xl type="submit">
+              {buttonText}
+            </Button>
             </div>
           </form>
         </div>
