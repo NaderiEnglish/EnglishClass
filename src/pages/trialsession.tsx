@@ -1,6 +1,7 @@
-import Link from 'next/link';
-import { useState } from 'react';
 import type { FormEvent } from 'react';
+import { useState } from 'react';
+
+import Link from 'next/link';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
