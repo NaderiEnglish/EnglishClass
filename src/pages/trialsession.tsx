@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import type { FormEvent } from 'react';
 import { useState } from 'react';
+import type { FormEvent } from 'react';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
@@ -19,6 +19,26 @@ const GOOGLE_FORM_URL =
 type NavbarProps = {
   isPersian: boolean;
 };
+
+const Navbar = ({ isPersian }: NavbarProps) => (
+  <nav>
+    <ul className="flex items-center justify-between">
+      <li>
+        <Link href="/">
+          <Logo xl />
+        </Link>
+      </li>
+
+      <li className="flex items-center gap-4">
+        <Link href="/" className="text-gray-700 dark:text-gray-200">
+          {isPersian ? 'خانه' : 'Home'}
+        </Link>
+
+        <ThemeToggle />
+      </li>
+    </ul>
+  </nav>
+);
 
 const getCourseValue = (course: CourseType, isPersian: boolean) => {
   if (course === 'general') {
@@ -41,31 +61,11 @@ const getTrialValue = (trialType: TrialType, isPersian: boolean) => {
     return isPersian ? '۲۰ دقیقه تعیین سطح زبان' : '20-minute Level Assessment';
   }
 
-  return isPersian
-    ? '۲۰ دقیقه تعیین سطح + ۴۰ دقیقه جلسه رایگان'
-    : '20-minute Level Assessment + 40-minute Free Lesson';
-};
+  if (isPersian) {
+    return '۲۰ دقیقه تعیین سطح + ۴۰ دقیقه جلسه رایگان';
+  }
 
-const Navbar = ({ isPersian }: NavbarProps) => {
-  return (
-    <nav>
-      <ul className="flex items-center justify-between">
-        <li>
-          <Link href="/">
-            <Logo xl />
-          </Link>
-        </li>
-
-        <li className="flex items-center gap-4">
-          <Link href="/" className="text-gray-700 dark:text-gray-200">
-            {isPersian ? 'خانه' : 'Home'}
-          </Link>
-
-          <ThemeToggle />
-        </li>
-      </ul>
-    </nav>
-  );
+  return '20-minute Level Assessment + 40-minute Free Lesson';
 };
 
 const TrialSession = () => {
@@ -81,16 +81,23 @@ const TrialSession = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!course || !trialType) {
+      setError(
+        isPersian
+          ? 'لطفاً دوره و نوع جلسه آزمایشی را انتخاب کنید.'
+          : 'Please select a course and trial session type.',
+      );
       return;
     }
 
     setIsSubmitting(true);
     setSuccess(false);
+    setError('');
 
     const submitForm = document.createElement('form');
 
@@ -137,6 +144,7 @@ const TrialSession = () => {
     });
 
     document.body.appendChild(submitForm);
+
     submitForm.submit();
 
     window.setTimeout(() => {
@@ -151,7 +159,7 @@ const TrialSession = () => {
       setAdditionalInfo('');
 
       submitForm.remove();
-    }, 1000);
+    }, 1500);
   };
 
   let submitText = 'Request Free Trial';
@@ -190,7 +198,10 @@ const TrialSession = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+            <form
+              onSubmit={handleSubmit}
+              className="mt-8 space-y-6"
+            >
               <div>
                 <label
                   htmlFor="name"
@@ -382,6 +393,12 @@ const TrialSession = () => {
                   className="w-full resize-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
                 />
               </div>
+
+              {error && (
+                <div className="rounded-2xl bg-red-100 p-4 text-center text-red-800 dark:bg-red-900 dark:text-red-100">
+                  {error}
+                </div>
+              )}
 
               {success && (
                 <div className="rounded-2xl bg-green-100 p-4 text-center text-green-800 dark:bg-green-900 dark:text-green-100">
