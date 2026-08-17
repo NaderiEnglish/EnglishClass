@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import type { FormEvent } from 'react';
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
@@ -58,16 +57,12 @@ const getCourseValue = (course: CourseType, isPersian: boolean) => {
 
 const getTrialValue = (trialType: TrialType, isPersian: boolean) => {
   if (trialType === 'level') {
-    return isPersian
-      ? '۲۰ دقیقه تعیین سطح زبان'
-      : '20-minute Level Assessment';
+    return isPersian ? '۲۰ دقیقه تعیین سطح زبان' : '20-minute Level Assessment';
   }
 
-  if (isPersian) {
-    return '۲۰ دقیقه تعیین سطح + ۴۰ دقیقه جلسه رایگان';
-  }
-
-  return '20-minute Level Assessment + 40-minute Free Lesson';
+  return isPersian
+    ? '۲۰ دقیقه تعیین سطح + ۴۰ دقیقه جلسه رایگان'
+    : '20-minute Level Assessment + 40-minute Free Lesson';
 };
 
 const TrialSession = () => {
