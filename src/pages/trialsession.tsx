@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { useState, type FormEvent } from 'react';
+import type { FormEvent } from 'react';
+import { useState } from 'react';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
@@ -141,7 +142,6 @@ const TrialSession = () => {
     });
 
     document.body.appendChild(submitForm);
-
     submitForm.submit();
 
     window.setTimeout(() => {
