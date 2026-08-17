@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { FormEvent } from 'react';
 import { useState } from 'react';
 
 import { Background } from '../background/Background';
@@ -16,19 +17,56 @@ type SessionsPerWeek = 2 | 3 | 4;
 const GOOGLE_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSfOkyT9Umn468g__lp5o5uCH3FLZrCB2SNDBHsCuFXW0wkJGQ/formResponse';
 
+const getCourseValue = (
+  course: CourseType,
+  isPersian: boolean,
+): string => {
+  if (course === 'general') {
+    return isPersian
+      ? 'انگلیسی عمومی فشرده شخصی'
+      : 'Personalized Compact General English';
+  }
+
+  if (course === 'ielts') {
+    return isPersian ? 'آیلتس فشرده شخصی' : 'Personalized Compact IELTS';
+  }
+
+  return isPersian ? 'تافل فشرده شخصی' : 'Personalized Compact TOEFL';
+};
+
+const getSessionsValue = (
+  sessions: SessionsPerWeek,
+  isPersian: boolean,
+): string => {
+  if (sessions === 4) {
+    return isPersian
+      ? '۴ جلسه، هر جلسه ۱.۵ ساعت در هفته'
+      : '4 × 1.5-hour sessions per week';
+  }
+
+  if (sessions === 3) {
+    return isPersian
+      ? '۳ جلسه، هر جلسه ۱.۵ ساعت در هفته'
+      : '3 × 1.5-hour sessions per week';
+  }
+
+  return isPersian
+    ? '۲ جلسه، هر جلسه ۱.۵ ساعت در هفته'
+    : '2 × 1.5-hour sessions per week';
+};
+
 const Courses = () => {
   const { language } = useLanguage();
   const isPersian = language === 'fa';
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [country, setCountry] = useState('');
   const [course, setCourse] = useState<CourseType | ''>('');
   const [sessions, setSessions] = useState<SessionsPerWeek | ''>('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
 
   const prices = {
     general: {
@@ -58,22 +96,15 @@ const Courses = () => {
 
   const price = calculatePrice();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!course || !sessions) {
-      setError(
-        isPersian
-          ? 'لطفاً دوره و تعداد جلسات را انتخاب کنید.'
-          : 'Please select a course and number of sessions.',
-      );
-
       return;
     }
 
     setIsSubmitting(true);
     setSuccess(false);
-    setError('');
 
     const submitForm = document.createElement('form');
 
@@ -93,25 +124,15 @@ const Courses = () => {
       },
       {
         name: 'entry.1532462409',
-        value: email,
+        value: country,
       },
       {
         name: 'entry.641326499',
-        value:
-          course === 'general'
-            ? 'Personalized Compact General English'
-            : course === 'ielts'
-              ? 'Personalized Compact IELTS'
-              : 'Personalized Compact TOEFL',
+        value: getCourseValue(course, isPersian),
       },
       {
         name: 'entry.809186138',
-        value:
-          sessions === 2
-            ? '2 × 1.5-hour sessions per week'
-            : sessions === 3
-              ? '3 × 1.5-hour sessions per week'
-              : '4 × 1.5-hour sessions per week',
+        value: getSessionsValue(sessions, isPersian),
       },
     ];
 
@@ -126,7 +147,6 @@ const Courses = () => {
     });
 
     document.body.appendChild(submitForm);
-
     submitForm.submit();
 
     window.setTimeout(() => {
@@ -135,7 +155,7 @@ const Courses = () => {
 
       setName('');
       setPhone('');
-      setEmail('');
+      setCountry('');
       setCourse('');
       setSessions('');
 
@@ -149,12 +169,6 @@ const Courses = () => {
     'https://www.aparat.com/video/video/embed/videohash/npu751w/vt/frame';
 
   const videoUrl = isPersian ? aparatVideo : youtubeVideo;
-
-  let submitText = isPersian ? 'ثبت درخواست' : 'Request This Course';
-
-  if (isSubmitting) {
-    submitText = isPersian ? 'در حال ارسال...' : 'Sending...';
-  }
 
   return (
     <main
@@ -188,15 +202,11 @@ const Courses = () => {
 
             <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
               {isPersian
-                ? 'اطلاعات خود را وارد کنید و دوره مورد نظر خود را انتخاب کنید.'
-                : 'Enter your information and choose your preferred course.'}
+                ? 'اطلاعات خود را وارد کنید و دوره و برنامه هفتگی مورد نظر خود را انتخاب کنید.'
+                : 'Enter your information and choose your preferred course and weekly schedule.'}
             </p>
           </div>
-
-          <form
-            onSubmit={handleSubmit}
-            className="mt-8 space-y-5"
-          >
+          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
             <div>
               <label
                 htmlFor="name"
@@ -207,10 +217,14 @@ const Courses = () => {
 
               <input
                 id="name"
+                type="text"
                 required
                 value={name}
                 onChange={(event) => setName(event.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                placeholder={
+                  isPersian ? 'نام و نام خانوادگی' : 'Enter your full name'
+                }
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
             </div>
 
@@ -228,27 +242,34 @@ const Courses = () => {
                 required
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                placeholder={
+                  isPersian ? 'شماره تلفن' : 'Enter your phone number'
+                }
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
             </div>
 
             <div>
               <label
-                htmlFor="email"
+                htmlFor="country"
                 className="mb-2 block text-lg font-medium text-gray-900 dark:text-white"
               >
-                Email
+                {isPersian ? 'کشور محل اقامت' : 'Country of Residence'}
               </label>
 
               <input
-                id="email"
-                type="email"
+                id="country"
+                type="text"
                 required
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                value={country}
+                onChange={(event) => setCountry(event.target.value)}
+                placeholder={
+                  isPersian ? 'کشور محل اقامت' : 'Enter your country'
+                }
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
             </div>
+
             <div>
               <label
                 htmlFor="course"
@@ -264,7 +285,7 @@ const Courses = () => {
                 onChange={(event) =>
                   setCourse(event.target.value as CourseType)
                 }
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               >
                 <option value="">
                   {isPersian ? 'انتخاب دوره' : 'Select a course'}
@@ -283,9 +304,7 @@ const Courses = () => {
                 </option>
 
                 <option value="toefl">
-                  {isPersian
-                    ? 'تافل فشرده شخصی'
-                    : 'Personalized Compact TOEFL'}
+                  {isPersian ? 'تافل فشرده شخصی' : 'Personalized Compact TOEFL'}
                 </option>
               </select>
             </div>
@@ -305,7 +324,7 @@ const Courses = () => {
                 onChange={(event) =>
                   setSessions(Number(event.target.value) as SessionsPerWeek)
                 }
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               >
                 <option value="">
                   {isPersian ? 'انتخاب تعداد جلسات' : 'Select sessions'}
@@ -347,12 +366,6 @@ const Courses = () => {
               </div>
             )}
 
-            {error && (
-              <div className="rounded-2xl bg-red-100 p-4 text-center text-red-800 dark:bg-red-900 dark:text-red-100">
-                {error}
-              </div>
-            )}
-
             {success && (
               <div className="rounded-2xl bg-green-100 p-4 text-center text-green-800 dark:bg-green-900 dark:text-green-100">
                 {isPersian
@@ -363,7 +376,13 @@ const Courses = () => {
 
             <div className="pt-2 text-center">
               <Button xl type="submit">
-                {submitText}
+                {isSubmitting
+                  ? isPersian
+                    ? 'در حال ارسال...'
+                    : 'Sending...'
+                  : isPersian
+                    ? 'ثبت درخواست'
+                    : 'Request This Course'}
               </Button>
             </div>
           </form>
@@ -378,11 +397,7 @@ const Courses = () => {
                 <iframe
                   className="size-full"
                   src={videoUrl}
-                  title={
-                    isPersian
-                      ? 'معرفی دوره زبان انگلیسی عمومی'
-                      : 'Personalized General English Course'
-                  }
+                  title="Course Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
@@ -398,7 +413,7 @@ const Courses = () => {
 
               <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
                 {isPersian
-                  ? 'یک دوره کاملاً شخصی‌سازی‌شده برای تقویت مهارت‌های اصلی زبان انگلیسی. محتوای کلاس بر اساس سطح، نیازها و اهداف شما انتخاب می‌شود.'
+                  ? 'یک دوره کاملاً شخصی‌سازی‌شده برای تقویت مهارت‌های اصلی زبان انگلیسی.'
                   : 'A fully personalized English course designed around your level, needs, and goals.'}
               </p>
             </div>
@@ -410,11 +425,7 @@ const Courses = () => {
                 <iframe
                   className="size-full"
                   src={videoUrl}
-                  title={
-                    isPersian
-                      ? 'معرفی دوره شخصی آیلتس'
-                      : 'Personalized IELTS Course'
-                  }
+                  title="IELTS Course Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
@@ -428,8 +439,8 @@ const Courses = () => {
 
               <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
                 {isPersian
-                  ? 'برنامه‌ای شخصی‌سازی‌شده برای آمادگی آزمون آیلتس با تمرکز روی Speaking، Writing، Reading و Listening.'
-                  : 'A personalized IELTS preparation program focused on Speaking, Writing, Reading, and Listening.'}
+                  ? 'آمادگی شخصی‌سازی‌شده برای آزمون آیلتس.'
+                  : 'A personalized IELTS preparation program focused on your target score.'}
               </p>
             </div>
           </article>
@@ -440,11 +451,7 @@ const Courses = () => {
                 <iframe
                   className="size-full"
                   src={videoUrl}
-                  title={
-                    isPersian
-                      ? 'معرفی دوره شخصی تافل'
-                      : 'Personalized TOEFL Course'
-                  }
+                  title="TOEFL Course Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
@@ -458,8 +465,8 @@ const Courses = () => {
 
               <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
                 {isPersian
-                  ? 'دوره‌ای شخصی‌سازی‌شده برای آمادگی آزمون تافل و تقویت مهارت‌های چهارگانه.'
-                  : 'A personalized TOEFL preparation course designed to strengthen the four key skills.'}
+                  ? 'دوره‌ای شخصی‌سازی‌شده برای آمادگی آزمون تافل.'
+                  : 'A personalized TOEFL preparation course designed for your goals.'}
               </p>
             </div>
           </article>
@@ -470,7 +477,7 @@ const Courses = () => {
 
       <iframe
         name="google-course-submit"
-        title="Google Course Form Submission"
+        title="Google Form submission"
         className="hidden"
       />
     </main>
