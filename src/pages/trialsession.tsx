@@ -1,24 +1,25 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { useLanguage } from '../context/LanguageContext';
 import { Section } from '../layout/Section';
-import { NavbarTwoColumns } from '../navigation/NavbarTwoColumns';
 import { Footer } from '../templates/Footer';
 import { Logo } from '../templates/Logo';
 
+type CourseType = 'general' | 'ielts' | 'toefl' | 'speaking';
 type TrialType = 'level' | 'full';
-type CourseType = 'general' | 'ielts' | 'toefl';
+
+const GOOGLE_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSf1VmXXOhBwJ40UIZGGJLpMGvZqsljksuFEAcPDOOX75kpR5w/formResponse';
 
 const TrialSession = () => {
   const { language } = useLanguage();
   const isPersian = language === 'fa';
 
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState('');
   const [course, setCourse] = useState<CourseType | ''>('');
@@ -27,66 +28,93 @@ const TrialSession = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setIsSubmitting(true);
     setSuccess(false);
-    setError('');
 
-    try {
-      const response = await fetch('https://formsubmit.co/ajax/tejeco', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          country,
-          course,
-          trial_type: trialType,
-          additional_info: additionalInfo,
-          _subject: 'New Naderi English Trial Session Request',
-          _template: 'table',
-          _replyto: email,
-        }),
-      });
+    const form = event.currentTarget;
 
-      if (!response.ok) {
-        throw new Error('Submission failed');
-      }
+    const submitForm = document.createElement('form');
+    submitForm.method = 'POST';
+    submitForm.action = GOOGLE_FORM_URL;
+    submitForm.target = 'google-form-submit';
+    submitForm.style.display = 'none';
 
+    const fields = [
+      {
+        name: 'entry.441468348',
+        value: name,
+      },
+      {
+        name: 'entry.1329118742',
+        value: phone,
+      },
+      {
+        name: 'entry.799953698',
+        value: country,
+      },
+      {
+        name: 'entry.1774626949',
+        value:
+          course === 'general'
+            ? 'General English'
+            : course === 'ielts'
+              ? 'IELTS'
+              : course === 'toefl'
+                ? 'TOEFL'
+                : 'Speaking',
+      },
+      {
+        name: 'entry.280271934',
+        value:
+          trialType === 'level'
+            ? '20-minute Level Assessment'
+            : '20-minute Level Assessment + 40-minute Free Lesson',
+      },
+      {
+        name: 'entry.10664830',
+        value: additionalInfo,
+      },
+    ];
+
+    fields.forEach(({ name: fieldName, value }) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = fieldName;
+      input.value = value;
+      submitForm.appendChild(input);
+    });
+
+    document.body.appendChild(submitForm);
+
+    submitForm.submit();
+
+    window.setTimeout(() => {
+      setIsSubmitting(false);
       setSuccess(true);
+
       setName('');
-      setEmail('');
       setPhone('');
       setCountry('');
       setCourse('');
       setTrialType('');
       setAdditionalInfo('');
-    } catch {
-      setError(
-        isPersian
-          ? 'ارسال درخواست با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-          : 'Unable to send your request. Please try again.',
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
+
+      form.reset();
+      submitForm.remove();
+    }, 1000);
   };
 
-  let submitButtonText = 'Request Free Trial';
-
-  if (isSubmitting) {
-    submitButtonText = isPersian ? 'در حال ارسال...' : 'Sending...';
-  } else if (isPersian) {
-    submitButtonText = 'درخواست جلسه آزمایشی';
-  }
+  const submitText = isSubmitting
+    ? isPersian
+      ? 'در حال ارسال...'
+      : 'Sending...'
+    : isPersian
+      ? 'درخواست جلسه آزمایشی'
+      : 'Request Free Trial';
 
   return (
     <main
@@ -95,17 +123,7 @@ const TrialSession = () => {
     >
       <Background color="bg-gray-100 dark:bg-gray-900">
         <Section yPadding="py-6">
-          <NavbarTwoColumns logo={<Logo xl />}>
-            <li>
-              <Link href="/" className="text-gray-700 dark:text-gray-200">
-                {isPersian ? 'خانه' : 'Home'}
-              </Link>
-            </li>
-
-            <li>
-              <ThemeToggle />
-            </li>
-          </NavbarTwoColumns>
+          <Navbar isPersian={isPersian} />
         </Section>
       </Background>
 
@@ -125,7 +143,6 @@ const TrialSession = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-              {/* Full Name */}
               <div>
                 <label
                   htmlFor="name"
@@ -136,7 +153,6 @@ const TrialSession = () => {
 
                 <input
                   id="name"
-                  name="name"
                   type="text"
                   required
                   value={name}
@@ -148,30 +164,6 @@ const TrialSession = () => {
                 />
               </div>
 
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-2 block text-lg font-medium text-gray-900 dark:text-white"
-                >
-                  {isPersian ? 'ایمیل' : 'Email Address'}
-                </label>
-
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  placeholder={
-                    isPersian ? 'آدرس ایمیل' : 'Enter your email address'
-                  }
-                  className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
-                />
-              </div>
-
-              {/* Phone */}
               <div>
                 <label
                   htmlFor="phone"
@@ -182,7 +174,6 @@ const TrialSession = () => {
 
                 <input
                   id="phone"
-                  name="phone"
                   type="tel"
                   required
                   value={phone}
@@ -194,7 +185,6 @@ const TrialSession = () => {
                 />
               </div>
 
-              {/* Country */}
               <div>
                 <label
                   htmlFor="country"
@@ -205,7 +195,6 @@ const TrialSession = () => {
 
                 <input
                   id="country"
-                  name="country"
                   type="text"
                   required
                   value={country}
@@ -217,7 +206,6 @@ const TrialSession = () => {
                 />
               </div>
 
-              {/* Course */}
               <div>
                 <label
                   htmlFor="course"
@@ -228,7 +216,6 @@ const TrialSession = () => {
 
                 <select
                   id="course"
-                  name="course"
                   required
                   value={course}
                   onChange={(event) =>
@@ -253,10 +240,13 @@ const TrialSession = () => {
                   <option value="toefl">
                     {isPersian ? 'دوره شخصی تافل' : 'Personal TOEFL'}
                   </option>
+
+                  <option value="speaking">
+                    {isPersian ? 'دوره مکالمه' : 'Speaking Course'}
+                  </option>
                 </select>
               </div>
 
-              {/* Trial Type */}
               <div>
                 <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
                   {isPersian ? 'نوع جلسه آزمایشی' : 'Choose Your Trial Session'}
@@ -272,7 +262,7 @@ const TrialSession = () => {
                   >
                     <input
                       type="radio"
-                      name="trial_type"
+                      name="trialType"
                       value="level"
                       checked={trialType === 'level'}
                       onChange={() => setTrialType('level')}
@@ -280,7 +270,9 @@ const TrialSession = () => {
                     />
 
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      {isPersian ? 'تعیین سطح زبان' : 'Level Assessment'}
+                      {isPersian
+                        ? 'تعیین سطح زبان'
+                        : '20-Minute Level Assessment'}
                     </h3>
 
                     <p className="mt-2 text-gray-600 dark:text-gray-300">
@@ -299,7 +291,7 @@ const TrialSession = () => {
                   >
                     <input
                       type="radio"
-                      name="trial_type"
+                      name="trialType"
                       value="full"
                       checked={trialType === 'full'}
                       onChange={() => setTrialType('full')}
@@ -321,7 +313,6 @@ const TrialSession = () => {
                 </div>
               </div>
 
-              {/* Additional Information */}
               <div>
                 <label
                   htmlFor="additionalInfo"
@@ -332,7 +323,6 @@ const TrialSession = () => {
 
                 <textarea
                   id="additionalInfo"
-                  name="additional_info"
                   value={additionalInfo}
                   onChange={(event) => setAdditionalInfo(event.target.value)}
                   rows={5}
@@ -345,7 +335,6 @@ const TrialSession = () => {
                 />
               </div>
 
-              {/* Success Message */}
               {success && (
                 <div className="rounded-2xl bg-green-100 p-4 text-center text-green-800 dark:bg-green-900 dark:text-green-100">
                   {isPersian
@@ -354,18 +343,8 @@ const TrialSession = () => {
                 </div>
               )}
 
-              {/* Error Message */}
-              {error && (
-                <div className="rounded-2xl bg-red-100 p-4 text-center text-red-800 dark:bg-red-900 dark:text-red-100">
-                  {error}
-                </div>
-              )}
-
-              {/* Submit */}
               <div className="pt-2 text-center">
-                <Button xl type="submit">
-                  {submitButtonText}
-                </Button>
+                <Button xl>{submitText}</Button>
               </div>
             </form>
           </div>
@@ -373,8 +352,41 @@ const TrialSession = () => {
       </Section>
 
       <Footer />
+
+      <iframe
+        name="google-form-submit"
+        title="Google Form submission"
+        className="hidden"
+      />
     </main>
   );
 };
+
+type NavbarProps = {
+  isPersian: boolean;
+};
+
+const Navbar = ({ isPersian }: NavbarProps) => (
+  <nav>
+    <ul className="flex items-center justify-between">
+      <li>
+        <Link href="/">
+          <Logo xl />
+        </Link>
+      </li>
+
+      <li className="flex items-center gap-4">
+        <Link
+          href="/"
+          className="text-gray-700 dark:text-gray-200"
+        >
+          {isPersian ? 'خانه' : 'Home'}
+        </Link>
+
+        <ThemeToggle />
+      </li>
+    </ul>
+  </nav>
+);
 
 export default TrialSession;
