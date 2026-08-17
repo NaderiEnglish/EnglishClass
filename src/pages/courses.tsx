@@ -52,6 +52,24 @@ const getSessionsValue = (
     : '2 × 1.5-hour sessions per week';
 };
 
+const prices = {
+  general: {
+    2: 100,
+    3: 140,
+    4: 180,
+  },
+  ielts: {
+    2: 120,
+    3: 165,
+    4: 210,
+  },
+  toefl: {
+    2: 120,
+    3: 165,
+    4: 210,
+  },
+};
+
 const Courses = () => {
   const { language } = useLanguage();
   const isPersian = language === 'fa';
@@ -65,33 +83,8 @@ const Courses = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const prices = {
-    general: {
-      2: 100,
-      3: 140,
-      4: 180,
-    },
-    ielts: {
-      2: 120,
-      3: 165,
-      4: 210,
-    },
-    toefl: {
-      2: 120,
-      3: 165,
-      4: 210,
-    },
-  };
-
-  const calculatePrice = () => {
-    if (!course || !sessions) {
-      return 0;
-    }
-
-    return prices[course][sessions];
-  };
-
-  const price = calculatePrice();
+  const price =
+    course && sessions ? prices[course][sessions] : 0;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -166,17 +159,17 @@ const Courses = () => {
     'https://www.aparat.com/video/video/embed/videohash/npu751w/vt/frame';
 
   const videoUrl = isPersian ? aparatVideo : youtubeVideo;
-  
+
   let buttonText = 'Request This Course';
-  
+
   if (isPersian) {
     buttonText = 'ثبت درخواست';
   }
-  
+
   if (isSubmitting) {
     buttonText = isPersian ? 'در حال ارسال...' : 'Sending...';
   }
-  
+
   return (
     <main
       className="min-h-screen bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300"
@@ -213,6 +206,7 @@ const Courses = () => {
                 : 'Enter your information and choose your preferred course and weekly schedule.'}
             </p>
           </div>
+
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
             <div>
               <label
@@ -311,7 +305,9 @@ const Courses = () => {
                 </option>
 
                 <option value="toefl">
-                  {isPersian ? 'تافل فشرده شخصی' : 'Personalized Compact TOEFL'}
+                  {isPersian
+                    ? 'تافل فشرده شخصی'
+                    : 'Personalized Compact TOEFL'}
                 </option>
               </select>
             </div>
@@ -382,14 +378,13 @@ const Courses = () => {
             )}
 
             <div className="pt-2 text-center">
-            <Button xl type="submit">
-              {buttonText}
-            </Button>
+              <Button xl type="submit" disabled={isSubmitting}>
+                {buttonText}
+              </Button>
             </div>
           </form>
         </div>
       </Section>
-
       <Section yPadding="py-8">
         <div className="space-y-12">
           <article className="flex flex-col items-center gap-8 md:flex-row">
@@ -398,7 +393,7 @@ const Courses = () => {
                 <iframe
                   className="size-full"
                   src={videoUrl}
-                  title="Course Video"
+                  title="General English Course Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
