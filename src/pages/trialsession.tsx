@@ -58,9 +58,7 @@ const getCourseValue = (course: CourseType, isPersian: boolean) => {
 
 const getTrialValue = (trialType: TrialType, isPersian: boolean) => {
   if (trialType === 'level') {
-    return isPersian
-      ? '۲۰ دقیقه تعیین سطح زبان'
-      : '20-minute Level Assessment';
+    return isPersian ? '۲۰ دقیقه تعیین سطح زبان' : '20-minute Level Assessment';
   }
 
   return isPersian
@@ -137,7 +135,6 @@ const TrialSession = () => {
     });
 
     document.body.appendChild(submitForm);
-
     submitForm.submit();
 
     window.setTimeout(() => {
@@ -393,7 +390,9 @@ const TrialSession = () => {
               )}
 
               <div className="pt-2 text-center">
-                <Button xl>{submitText}</Button>
+                <Button xl type="submit">
+                  {submitText}
+                </Button>
               </div>
             </form>
           </div>
