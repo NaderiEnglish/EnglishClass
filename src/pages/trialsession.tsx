@@ -28,20 +28,6 @@ const TrialSession = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  let submitButtonText = 'Request Free Trial';
-
-  if (isPersian) {
-    submitButtonText = 'درخواست جلسه آزمایشی';
-  }
-
-  if (isSubmitting && isPersian) {
-    submitButtonText = 'در حال ارسال...';
-  }
-
-  if (isSubmitting && !isPersian) {
-    submitButtonText = 'Sending...';
-  }
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -50,53 +36,63 @@ const TrialSession = () => {
     setError('');
 
     try {
-      const formData = new FormData();
-
-      formData.append('name', name);
-      formData.append('phone', phone);
-      formData.append('country', country);
-      formData.append('course', course);
-      formData.append('trial_type', trialType);
-      formData.append('additional_info', additionalInfo);
-
-      const response = await fetch('https://formspree.io/f/mnpagakp', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Accept: 'application/json',
+      const response = await fetch(
+        'https://formsubmit.co/ajax/Mohammadreza.naderi8@gmail.com',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            phone,
+            country,
+            course,
+            trial_type: trialType,
+            additional_info: additionalInfo,
+            _subject: 'New Naderi English Trial Session Request',
+            _template: 'table',
+            _honey: '',
+          }),
         },
-      });
+      );
 
-      if (!response.ok) {
+      const result = await response.json();
+
+      if (!response.ok || result.success === false) {
         throw new Error(
           isPersian
-            ? 'ارسال درخواست با مشکل مواجه شد.'
-            : 'Unable to send your request.',
+            ? 'ارسال درخواست با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
+            : 'Unable to send your request. Please try again.',
         );
       }
 
       setSuccess(true);
-
       setName('');
       setPhone('');
       setCountry('');
       setCourse('');
       setTrialType('');
       setAdditionalInfo('');
-    } catch (submitError) {
-      if (submitError instanceof Error) {
-        setError(submitError.message);
-      } else {
-        setError(
-          isPersian
-            ? 'ارسال درخواست با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-            : 'Something went wrong. Please try again.',
-        );
-      }
+    } catch {
+      setError(
+        isPersian
+          ? 'ارسال درخواست با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
+          : 'Something went wrong. Please try again.',
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const submitButtonText = isSubmitting
+    ? isPersian
+      ? 'در حال ارسال...'
+      : 'Sending...'
+    : isPersian
+      ? 'درخواست جلسه آزمایشی'
+      : 'Request Free Trial';
 
   return (
     <main
@@ -107,7 +103,10 @@ const TrialSession = () => {
         <Section yPadding="py-6">
           <NavbarTwoColumns logo={<Logo xl />}>
             <li>
-              <Link href="/" className="text-gray-700 dark:text-gray-200">
+              <Link
+                href="/"
+                className="text-gray-700 dark:text-gray-200"
+              >
                 {isPersian ? 'خانه' : 'Home'}
               </Link>
             </li>
@@ -135,6 +134,15 @@ const TrialSession = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+              {/* Spam protection */}
+              <input
+                type="text"
+                name="_honey"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+              />
+
               <div>
                 <label
                   htmlFor="name"
@@ -241,7 +249,9 @@ const TrialSession = () => {
 
               <div>
                 <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
-                  {isPersian ? 'نوع جلسه آزمایشی' : 'Choose Your Trial Session'}
+                  {isPersian
+                    ? 'نوع جلسه آزمایشی'
+                    : 'Choose Your Trial Session'}
                 </h2>
 
                 <div className="grid gap-4 md:grid-cols-2">
