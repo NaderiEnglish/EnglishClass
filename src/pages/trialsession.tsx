@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { useState } from 'react';
 import type { FormEvent } from 'react';
+import { useState } from 'react';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
@@ -58,7 +58,9 @@ const getCourseValue = (course: CourseType, isPersian: boolean) => {
 
 const getTrialValue = (trialType: TrialType, isPersian: boolean) => {
   if (trialType === 'level') {
-    return isPersian ? '۲۰ دقیقه تعیین سطح زبان' : '20-minute Level Assessment';
+    return isPersian
+      ? '۲۰ دقیقه تعیین سطح زبان'
+      : '20-minute Level Assessment';
   }
 
   if (isPersian) {
@@ -198,10 +200,7 @@ const TrialSession = () => {
               </p>
             </div>
 
-            <form
-              onSubmit={handleSubmit}
-              className="mt-8 space-y-6"
-            >
+            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
               <div>
                 <label
                   htmlFor="name"
