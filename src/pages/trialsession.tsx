@@ -61,11 +61,7 @@ const TrialSession = () => {
       const result = await response.json();
 
       if (!response.ok || result.success === false) {
-        throw new Error(
-          isPersian
-            ? 'ارسال درخواست با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-            : 'Unable to send your request. Please try again.',
-        );
+        throw new Error('Submission failed');
       }
 
       setSuccess(true);
@@ -86,13 +82,13 @@ const TrialSession = () => {
     }
   };
 
-  const submitButtonText = isSubmitting
-    ? isPersian
-      ? 'در حال ارسال...'
-      : 'Sending...'
-    : isPersian
-      ? 'درخواست جلسه آزمایشی'
-      : 'Request Free Trial';
+  let submitButtonText = 'Request Free Trial';
+
+  if (isSubmitting) {
+    submitButtonText = isPersian ? 'در حال ارسال...' : 'Sending...';
+  } else if (isPersian) {
+    submitButtonText = 'درخواست جلسه آزمایشی';
+  }
 
   return (
     <main
@@ -103,10 +99,7 @@ const TrialSession = () => {
         <Section yPadding="py-6">
           <NavbarTwoColumns logo={<Logo xl />}>
             <li>
-              <Link
-                href="/"
-                className="text-gray-700 dark:text-gray-200"
-              >
+              <Link href="/" className="text-gray-700 dark:text-gray-200">
                 {isPersian ? 'خانه' : 'Home'}
               </Link>
             </li>
@@ -134,15 +127,6 @@ const TrialSession = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-              {/* Spam protection */}
-              <input
-                type="text"
-                name="_honey"
-                tabIndex={-1}
-                autoComplete="off"
-                className="hidden"
-              />
-
               <div>
                 <label
                   htmlFor="name"
@@ -249,9 +233,7 @@ const TrialSession = () => {
 
               <div>
                 <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
-                  {isPersian
-                    ? 'نوع جلسه آزمایشی'
-                    : 'Choose Your Trial Session'}
+                  {isPersian ? 'نوع جلسه آزمایشی' : 'Choose Your Trial Session'}
                 </h2>
 
                 <div className="grid gap-4 md:grid-cols-2">
