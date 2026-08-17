@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
@@ -14,6 +15,58 @@ type TrialType = 'level' | 'full';
 
 const GOOGLE_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSf1VmXXOhBwJ40UIZGGJLpMGvZqsljksuFEAcPDOOX75kpR5w/formResponse';
+
+type NavbarProps = {
+  isPersian: boolean;
+};
+
+const Navbar = ({ isPersian }: NavbarProps) => (
+  <nav>
+    <ul className="flex items-center justify-between">
+      <li>
+        <Link href="/">
+          <Logo xl />
+        </Link>
+      </li>
+
+      <li className="flex items-center gap-4">
+        <Link href="/" className="text-gray-700 dark:text-gray-200">
+          {isPersian ? 'خانه' : 'Home'}
+        </Link>
+
+        <ThemeToggle />
+      </li>
+    </ul>
+  </nav>
+);
+
+const getCourseValue = (course: CourseType, isPersian: boolean) => {
+  if (course === 'general') {
+    return isPersian ? 'انگلیسی عمومی' : 'General English';
+  }
+
+  if (course === 'ielts') {
+    return isPersian ? 'آیلتس' : 'IELTS';
+  }
+
+  if (course === 'toefl') {
+    return isPersian ? 'تافل' : 'TOEFL';
+  }
+
+  return isPersian ? 'مکالمه' : 'Speaking';
+};
+
+const getTrialValue = (trialType: TrialType, isPersian: boolean) => {
+  if (trialType === 'level') {
+    return isPersian
+      ? '۲۰ دقیقه تعیین سطح زبان'
+      : '20-minute Level Assessment';
+  }
+
+  return isPersian
+    ? '۲۰ دقیقه تعیین سطح + ۴۰ دقیقه جلسه رایگان'
+    : '20-minute Level Assessment + 40-minute Free Lesson';
+};
 
 const TrialSession = () => {
   const { language } = useLanguage();
@@ -32,12 +85,15 @@ const TrialSession = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!course || !trialType) {
+      return;
+    }
+
     setIsSubmitting(true);
     setSuccess(false);
 
-    const form = event.currentTarget;
-
     const submitForm = document.createElement('form');
+
     submitForm.method = 'POST';
     submitForm.action = GOOGLE_FORM_URL;
     submitForm.target = 'google-form-submit';
@@ -58,21 +114,11 @@ const TrialSession = () => {
       },
       {
         name: 'entry.1774626949',
-        value:
-          course === 'general'
-            ? 'General English'
-            : course === 'ielts'
-              ? 'IELTS'
-              : course === 'toefl'
-                ? 'TOEFL'
-                : 'Speaking',
+        value: getCourseValue(course, isPersian),
       },
       {
         name: 'entry.280271934',
-        value:
-          trialType === 'level'
-            ? '20-minute Level Assessment'
-            : '20-minute Level Assessment + 40-minute Free Lesson',
+        value: getTrialValue(trialType, isPersian),
       },
       {
         name: 'entry.10664830',
@@ -82,9 +128,11 @@ const TrialSession = () => {
 
     fields.forEach(({ name: fieldName, value }) => {
       const input = document.createElement('input');
+
       input.type = 'hidden';
       input.name = fieldName;
       input.value = value;
+
       submitForm.appendChild(input);
     });
 
@@ -103,18 +151,19 @@ const TrialSession = () => {
       setTrialType('');
       setAdditionalInfo('');
 
-      form.reset();
       submitForm.remove();
     }, 1000);
   };
 
-  const submitText = isSubmitting
-    ? isPersian
-      ? 'در حال ارسال...'
-      : 'Sending...'
-    : isPersian
-      ? 'درخواست جلسه آزمایشی'
-      : 'Request Free Trial';
+  let submitText = 'Request Free Trial';
+
+  if (isPersian) {
+    submitText = 'درخواست جلسه آزمایشی';
+  }
+
+  if (isSubmitting) {
+    submitText = isPersian ? 'در حال ارسال...' : 'Sending...';
+  }
 
   return (
     <main
@@ -361,32 +410,5 @@ const TrialSession = () => {
     </main>
   );
 };
-
-type NavbarProps = {
-  isPersian: boolean;
-};
-
-const Navbar = ({ isPersian }: NavbarProps) => (
-  <nav>
-    <ul className="flex items-center justify-between">
-      <li>
-        <Link href="/">
-          <Logo xl />
-        </Link>
-      </li>
-
-      <li className="flex items-center gap-4">
-        <Link
-          href="/"
-          className="text-gray-700 dark:text-gray-200"
-        >
-          {isPersian ? 'خانه' : 'Home'}
-        </Link>
-
-        <ThemeToggle />
-      </li>
-    </ul>
-  </nav>
-);
 
 export default TrialSession;
