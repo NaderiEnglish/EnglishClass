@@ -378,7 +378,7 @@ const Courses = () => {
             )}
 
             <div className="pt-2 text-center">
-              <Button xl type="submit" disabled={isSubmitting}>
+              <Button xl type="submit">
                 {buttonText}
               </Button>
             </div>
