@@ -18,6 +18,7 @@ const TrialSession = () => {
   const isPersian = language === 'fa';
 
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState('');
   const [course, setCourse] = useState<CourseType | ''>('');
@@ -36,36 +37,33 @@ const TrialSession = () => {
     setError('');
 
     try {
-      const response = await fetch(
-        'https://formsubmit.co/ajax/Mohammadreza.naderi8@gmail.com',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            name,
-            phone,
-            country,
-            course,
-            trial_type: trialType,
-            additional_info: additionalInfo,
-            _subject: 'New Naderi English Trial Session Request',
-            _template: 'table',
-            _honey: '',
-          }),
+      const response = await fetch('https://formsubmit.co/ajax/tejeco', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          country,
+          course,
+          trial_type: trialType,
+          additional_info: additionalInfo,
+          _subject: 'New Naderi English Trial Session Request',
+          _template: 'table',
+          _replyto: email,
+        }),
+      });
 
-      const result = await response.json();
-
-      if (!response.ok || result.success === false) {
+      if (!response.ok) {
         throw new Error('Submission failed');
       }
 
       setSuccess(true);
       setName('');
+      setEmail('');
       setPhone('');
       setCountry('');
       setCourse('');
@@ -75,7 +73,7 @@ const TrialSession = () => {
       setError(
         isPersian
           ? 'ارسال درخواست با مشکل مواجه شد. لطفاً دوباره تلاش کنید.'
-          : 'Something went wrong. Please try again.',
+          : 'Unable to send your request. Please try again.',
       );
     } finally {
       setIsSubmitting(false);
@@ -127,6 +125,7 @@ const TrialSession = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+              {/* Full Name */}
               <div>
                 <label
                   htmlFor="name"
@@ -149,6 +148,30 @@ const TrialSession = () => {
                 />
               </div>
 
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-lg font-medium text-gray-900 dark:text-white"
+                >
+                  {isPersian ? 'ایمیل' : 'Email Address'}
+                </label>
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder={
+                    isPersian ? 'آدرس ایمیل' : 'Enter your email address'
+                  }
+                  className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                />
+              </div>
+
+              {/* Phone */}
               <div>
                 <label
                   htmlFor="phone"
@@ -171,6 +194,7 @@ const TrialSession = () => {
                 />
               </div>
 
+              {/* Country */}
               <div>
                 <label
                   htmlFor="country"
@@ -193,6 +217,7 @@ const TrialSession = () => {
                 />
               </div>
 
+              {/* Course */}
               <div>
                 <label
                   htmlFor="course"
@@ -231,6 +256,7 @@ const TrialSession = () => {
                 </select>
               </div>
 
+              {/* Trial Type */}
               <div>
                 <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">
                   {isPersian ? 'نوع جلسه آزمایشی' : 'Choose Your Trial Session'}
@@ -295,6 +321,7 @@ const TrialSession = () => {
                 </div>
               </div>
 
+              {/* Additional Information */}
               <div>
                 <label
                   htmlFor="additionalInfo"
@@ -318,6 +345,7 @@ const TrialSession = () => {
                 />
               </div>
 
+              {/* Success Message */}
               {success && (
                 <div className="rounded-2xl bg-green-100 p-4 text-center text-green-800 dark:bg-green-900 dark:text-green-100">
                   {isPersian
@@ -326,12 +354,14 @@ const TrialSession = () => {
                 </div>
               )}
 
+              {/* Error Message */}
               {error && (
                 <div className="rounded-2xl bg-red-100 p-4 text-center text-red-800 dark:bg-red-900 dark:text-red-100">
                   {error}
                 </div>
               )}
 
+              {/* Submit */}
               <div className="pt-2 text-center">
                 <Button xl type="submit">
                   {submitButtonText}
