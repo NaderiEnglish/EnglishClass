@@ -1,7 +1,6 @@
+import Link from 'next/link';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
-
-import Link from 'next/link';
 
 import { Background } from '../background/Background';
 import { Button } from '../button/Button';
@@ -20,26 +19,6 @@ const GOOGLE_FORM_URL =
 type NavbarProps = {
   isPersian: boolean;
 };
-
-const Navbar = ({ isPersian }: NavbarProps) => (
-  <nav>
-    <ul className="flex items-center justify-between">
-      <li>
-        <Link href="/">
-          <Logo xl />
-        </Link>
-      </li>
-
-      <li className="flex items-center gap-4">
-        <Link href="/" className="text-gray-700 dark:text-gray-200">
-          {isPersian ? 'خانه' : 'Home'}
-        </Link>
-
-        <ThemeToggle />
-      </li>
-    </ul>
-  </nav>
-);
 
 const getCourseValue = (course: CourseType, isPersian: boolean) => {
   if (course === 'general') {
@@ -65,6 +44,28 @@ const getTrialValue = (trialType: TrialType, isPersian: boolean) => {
   return isPersian
     ? '۲۰ دقیقه تعیین سطح + ۴۰ دقیقه جلسه رایگان'
     : '20-minute Level Assessment + 40-minute Free Lesson';
+};
+
+const Navbar = ({ isPersian }: NavbarProps) => {
+  return (
+    <nav>
+      <ul className="flex items-center justify-between">
+        <li>
+          <Link href="/">
+            <Logo xl />
+          </Link>
+        </li>
+
+        <li className="flex items-center gap-4">
+          <Link href="/" className="text-gray-700 dark:text-gray-200">
+            {isPersian ? 'خانه' : 'Home'}
+          </Link>
+
+          <ThemeToggle />
+        </li>
+      </ul>
+    </nav>
+  );
 };
 
 const TrialSession = () => {
