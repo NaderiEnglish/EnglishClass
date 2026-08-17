@@ -13,14 +13,22 @@ import { Logo } from '../templates/Logo';
 type CourseType = 'general' | 'ielts' | 'toefl';
 type SessionsPerWeek = 2 | 3 | 4;
 
+const GOOGLE_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSfOkyT9Umn468g__lp5o5uCH3FLZrCB2SNDBHsCuFXW0wkJGQ/formResponse';
+
 const Courses = () => {
   const { language } = useLanguage();
   const isPersian = language === 'fa';
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [course, setCourse] = useState<CourseType | ''>('');
   const [sessions, setSessions] = useState<SessionsPerWeek | ''>('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   const prices = {
     general: {
@@ -50,8 +58,91 @@ const Courses = () => {
 
   const price = calculatePrice();
 
-  // Temporary videos.
-  // Replace these later with the actual course videos.
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!course || !sessions) {
+      setError(
+        isPersian
+          ? 'لطفاً دوره و تعداد جلسات را انتخاب کنید.'
+          : 'Please select a course and number of sessions.',
+      );
+
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSuccess(false);
+    setError('');
+
+    const submitForm = document.createElement('form');
+
+    submitForm.method = 'POST';
+    submitForm.action = GOOGLE_FORM_URL;
+    submitForm.target = 'google-course-submit';
+    submitForm.style.display = 'none';
+
+    const fields = [
+      {
+        name: 'entry.204446778',
+        value: name,
+      },
+      {
+        name: 'entry.382792926',
+        value: phone,
+      },
+      {
+        name: 'entry.1532462409',
+        value: email,
+      },
+      {
+        name: 'entry.641326499',
+        value:
+          course === 'general'
+            ? 'Personalized Compact General English'
+            : course === 'ielts'
+              ? 'Personalized Compact IELTS'
+              : 'Personalized Compact TOEFL',
+      },
+      {
+        name: 'entry.809186138',
+        value:
+          sessions === 2
+            ? '2 × 1.5-hour sessions per week'
+            : sessions === 3
+              ? '3 × 1.5-hour sessions per week'
+              : '4 × 1.5-hour sessions per week',
+      },
+    ];
+
+    fields.forEach(({ name: fieldName, value }) => {
+      const input = document.createElement('input');
+
+      input.type = 'hidden';
+      input.name = fieldName;
+      input.value = value;
+
+      submitForm.appendChild(input);
+    });
+
+    document.body.appendChild(submitForm);
+
+    submitForm.submit();
+
+    window.setTimeout(() => {
+      setIsSubmitting(false);
+      setSuccess(true);
+
+      setName('');
+      setPhone('');
+      setEmail('');
+      setCourse('');
+      setSessions('');
+
+      submitForm.remove();
+    }, 1500);
+  };
+
   const youtubeVideo = 'https://www.youtube.com/embed/X1WpQInh1Dw';
 
   const aparatVideo =
@@ -59,12 +150,17 @@ const Courses = () => {
 
   const videoUrl = isPersian ? aparatVideo : youtubeVideo;
 
+  let submitText = isPersian ? 'ثبت درخواست' : 'Request This Course';
+
+  if (isSubmitting) {
+    submitText = isPersian ? 'در حال ارسال...' : 'Sending...';
+  }
+
   return (
     <main
       className="min-h-screen bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300"
       dir={isPersian ? 'rtl' : 'ltr'}
     >
-      {/* Header */}
       <Background color="bg-gray-100 dark:bg-gray-900">
         <Section yPadding="py-6">
           <NavbarTwoColumns logo={<Logo xl />}>
@@ -81,7 +177,6 @@ const Courses = () => {
         </Section>
       </Background>
 
-      {/* Registration Form */}
       <Section yPadding="pt-12 pb-8">
         <div className="mx-auto max-w-3xl rounded-[32px] bg-gray-100 p-8 shadow-xl dark:bg-gray-800 md:p-10">
           <div className="text-center">
@@ -93,13 +188,15 @@ const Courses = () => {
 
             <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
               {isPersian
-                ? 'اطلاعات خود را وارد کنید و دوره و برنامه هفتگی مورد نظر خود را انتخاب کنید.'
-                : 'Enter your information and choose your preferred course and weekly schedule.'}
+                ? 'اطلاعات خود را وارد کنید و دوره مورد نظر خود را انتخاب کنید.'
+                : 'Enter your information and choose your preferred course.'}
             </p>
           </div>
 
-          <form className="mt-8 space-y-5">
-            {/* Full Name */}
+          <form
+            onSubmit={handleSubmit}
+            className="mt-8 space-y-5"
+          >
             <div>
               <label
                 htmlFor="name"
@@ -110,17 +207,13 @@ const Courses = () => {
 
               <input
                 id="name"
-                type="text"
+                required
                 value={name}
                 onChange={(event) => setName(event.target.value)}
-                placeholder={
-                  isPersian ? 'نام و نام خانوادگی' : 'Enter your full name'
-                }
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
             </div>
 
-            {/* Phone */}
             <div>
               <label
                 htmlFor="phone"
@@ -132,16 +225,30 @@ const Courses = () => {
               <input
                 id="phone"
                 type="tel"
+                required
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
-                placeholder={
-                  isPersian ? 'شماره تلفن خود را وارد کنید' : 'Phone number'
-                }
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
             </div>
 
-            {/* Course */}
+            <div>
+              <label
+                htmlFor="email"
+                className="mb-2 block text-lg font-medium text-gray-900 dark:text-white"
+              >
+                Email
+              </label>
+
+              <input
+                id="email"
+                type="email"
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+              />
+            </div>
             <div>
               <label
                 htmlFor="course"
@@ -152,11 +259,12 @@ const Courses = () => {
 
               <select
                 id="course"
+                required
                 value={course}
                 onChange={(event) =>
                   setCourse(event.target.value as CourseType)
                 }
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               >
                 <option value="">
                   {isPersian ? 'انتخاب دوره' : 'Select a course'}
@@ -175,12 +283,13 @@ const Courses = () => {
                 </option>
 
                 <option value="toefl">
-                  {isPersian ? 'تافل فشرده شخصی' : 'Personalized Compact TOEFL'}
+                  {isPersian
+                    ? 'تافل فشرده شخصی'
+                    : 'Personalized Compact TOEFL'}
                 </option>
               </select>
             </div>
 
-            {/* Sessions */}
             <div>
               <label
                 htmlFor="sessions"
@@ -191,11 +300,12 @@ const Courses = () => {
 
               <select
                 id="sessions"
+                required
                 value={sessions}
                 onChange={(event) =>
                   setSessions(Number(event.target.value) as SessionsPerWeek)
                 }
-                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none transition focus:border-primary-500 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-lg text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               >
                 <option value="">
                   {isPersian ? 'انتخاب تعداد جلسات' : 'Select sessions'}
@@ -221,7 +331,6 @@ const Courses = () => {
               </select>
             </div>
 
-            {/* Price */}
             {price > 0 && (
               <div className="rounded-2xl bg-primary-100 p-5 text-center dark:bg-primary-900">
                 <p className="text-lg text-gray-700 dark:text-gray-200">
@@ -238,19 +347,31 @@ const Courses = () => {
               </div>
             )}
 
+            {error && (
+              <div className="rounded-2xl bg-red-100 p-4 text-center text-red-800 dark:bg-red-900 dark:text-red-100">
+                {error}
+              </div>
+            )}
+
+            {success && (
+              <div className="rounded-2xl bg-green-100 p-4 text-center text-green-800 dark:bg-green-900 dark:text-green-100">
+                {isPersian
+                  ? 'درخواست شما با موفقیت ارسال شد. به‌زودی با شما تماس خواهیم گرفت.'
+                  : 'Your request has been sent successfully. We will contact you soon.'}
+              </div>
+            )}
+
             <div className="pt-2 text-center">
-              <Button xl>
-                {isPersian ? 'ثبت درخواست' : 'Request This Course'}
+              <Button xl type="submit">
+                {submitText}
               </Button>
             </div>
           </form>
         </div>
       </Section>
 
-      {/* Course Videos */}
       <Section yPadding="py-8">
         <div className="space-y-12">
-          {/* General English */}
           <article className="flex flex-col items-center gap-8 md:flex-row">
             <div className="w-full shrink-0 md:w-[40%]">
               <div className="aspect-video overflow-hidden rounded-[28px] shadow-lg">
@@ -277,13 +398,12 @@ const Courses = () => {
 
               <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
                 {isPersian
-                  ? 'یک دوره کاملاً شخصی‌سازی‌شده برای تقویت مهارت‌های اصلی زبان انگلیسی. محتوای کلاس بر اساس سطح، نیازها و اهداف شما انتخاب می‌شود و تمرکز ویژه‌ای بر مکالمه، واژگان، گرامر و استفاده طبیعی از زبان دارد.'
-                  : 'A fully personalized English course designed around your level, needs, and goals. Lessons focus on practical communication, vocabulary, grammar, speaking, and using English naturally in real-life situations.'}
+                  ? 'یک دوره کاملاً شخصی‌سازی‌شده برای تقویت مهارت‌های اصلی زبان انگلیسی. محتوای کلاس بر اساس سطح، نیازها و اهداف شما انتخاب می‌شود.'
+                  : 'A fully personalized English course designed around your level, needs, and goals.'}
               </p>
             </div>
           </article>
 
-          {/* IELTS */}
           <article className="flex flex-col items-center gap-8 md:flex-row">
             <div className="w-full shrink-0 md:w-[40%]">
               <div className="aspect-video overflow-hidden rounded-[28px] shadow-lg">
@@ -308,13 +428,12 @@ const Courses = () => {
 
               <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
                 {isPersian
-                  ? 'برنامه‌ای شخصی‌سازی‌شده برای آمادگی آزمون آیلتس، با تمرکز بر مهارت‌های Speaking، Writing، Reading و Listening. نقاط ضعف شما شناسایی شده و تمرین‌ها بر اساس هدف نمره‌ای شما طراحی می‌شوند.'
-                  : 'A personalized IELTS preparation program focused on Speaking, Writing, Reading, and Listening. Lessons are adapted to your current level, weaknesses, and target score.'}
+                  ? 'برنامه‌ای شخصی‌سازی‌شده برای آمادگی آزمون آیلتس با تمرکز روی Speaking، Writing، Reading و Listening.'
+                  : 'A personalized IELTS preparation program focused on Speaking, Writing, Reading, and Listening.'}
               </p>
             </div>
           </article>
 
-          {/* TOEFL */}
           <article className="flex flex-col items-center gap-8 md:flex-row">
             <div className="w-full shrink-0 md:w-[40%]">
               <div className="aspect-video overflow-hidden rounded-[28px] shadow-lg">
@@ -339,8 +458,8 @@ const Courses = () => {
 
               <p className="mt-4 text-xl leading-9 text-gray-600 dark:text-gray-300">
                 {isPersian
-                  ? 'دوره‌ای شخصی‌سازی‌شده برای آمادگی آزمون تافل و تقویت مهارت‌های مورد نیاز آزمون. تمرکز کلاس‌ها بر روی مهارت‌های چهارگانه و استراتژی‌های کاربردی برای رسیدن به نمره مورد نظر شماست.'
-                  : 'A personalized TOEFL preparation course designed to strengthen the four key skills and develop practical strategies for achieving your target score.'}
+                  ? 'دوره‌ای شخصی‌سازی‌شده برای آمادگی آزمون تافل و تقویت مهارت‌های چهارگانه.'
+                  : 'A personalized TOEFL preparation course designed to strengthen the four key skills.'}
               </p>
             </div>
           </article>
@@ -348,6 +467,12 @@ const Courses = () => {
       </Section>
 
       <Footer />
+
+      <iframe
+        name="google-course-submit"
+        title="Google Course Form Submission"
+        className="hidden"
+      />
     </main>
   );
 };
