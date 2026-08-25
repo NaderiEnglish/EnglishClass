@@ -5,8 +5,10 @@ import { useState } from 'react';
 
 import { LanguageContext } from '../context/LanguageContext';
 
+type Language = 'en' | 'fa';
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const [language, setLanguage] = useState<'en' | 'fa' | null>(null);
+  const [language, setLanguage] = useState<Language | null>(null);
 
   if (language === null) {
     return (

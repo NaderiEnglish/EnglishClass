@@ -12,23 +12,12 @@ import { Hero } from './Hero';
 import { IntroVideo } from './IntroVideo';
 import { VerticalFeatures } from './VerticalFeatures';
 
-type Language = 'en' | 'fa';
-
 const Base = () => {
   const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language | null;
-
-    if (savedLanguage === 'en' || savedLanguage === 'fa') {
-      setLanguage(savedLanguage);
-    }
-  }, [setLanguage]);
-
-  useEffect(() => {
     document.documentElement.dir = language === 'fa' ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
-    localStorage.setItem('language', language);
   }, [language]);
 
   return (
