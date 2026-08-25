@@ -24,9 +24,10 @@ const Hero = () => {
 
               <a
                 href="tel:+989397975094"
+                dir="ltr"
                 className="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300"
               >
-                📞 +98 939 797 5094
+                <span>📞</span> +98 939 797 5094
               </a>
             </div>
           }
