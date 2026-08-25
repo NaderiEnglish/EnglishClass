@@ -17,18 +17,20 @@ const Hero = () => {
   return (
     <Background color="bg-gray-100 dark:bg-gray-900">
       <Section yPadding="py-6">
-        <NavbarTwoColumns logo={<Logo xl />}>
-          <li>
-            <a
-              href="tel:+989397975094"
-              dir="ltr"
-              className="flex items-center gap-2 text-lg font-medium text-gray-700 transition hover:text-primary-600 dark:text-gray-200"
-            >
-              <span>📞</span>
-              <span>+98 939 797 5094</span>
-            </a>
-          </li>
+        <NavbarTwoColumns
+          logo={
+            <div className="flex flex-col items-center">
+              <Logo xl />
 
+              <a
+                href="tel:+989397975094"
+                className="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                📞 +98 939 797 5094
+              </a>
+            </div>
+          }
+        >
           <li>
             <ThemeToggle />
           </li>
