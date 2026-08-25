@@ -40,30 +40,28 @@ const Navbar = ({ isPersian }: NavbarProps) => (
   </nav>
 );
 
-const getCourseValue = (course: CourseType, isPersian: boolean) => {
+const getCourseValue = (course: CourseType): string => {
   if (course === 'general') {
-    return isPersian ? 'انگلیسی عمومی' : 'General English';
+    return 'General English';
   }
 
   if (course === 'ielts') {
-    return isPersian ? 'آیلتس' : 'IELTS';
+    return 'IELTS';
   }
 
   if (course === 'toefl') {
-    return isPersian ? 'تافل' : 'TOEFL';
+    return 'TOEFL';
   }
 
-  return isPersian ? 'مکالمه' : 'Speaking';
+  return 'Speaking';
 };
 
-const getTrialValue = (trialType: TrialType, isPersian: boolean) => {
+const getTrialValue = (trialType: TrialType): string => {
   if (trialType === 'level') {
-    return isPersian ? '۲۰ دقیقه تعیین سطح زبان' : '20-minute Level Assessment';
+    return '20-minute Level Assessment';
   }
 
-  return isPersian
-    ? '۲۰ دقیقه تعیین سطح + ۴۰ دقیقه جلسه رایگان'
-    : '20-minute Level Assessment + 40-minute Free Lesson';
+  return '20-minute Level Assessment + 40-minute Free Lesson';
 };
 
 const TrialSession = () => {
@@ -119,11 +117,11 @@ const TrialSession = () => {
       },
       {
         name: 'entry.1774626949',
-        value: getCourseValue(course, isPersian),
+        value: getCourseValue(course),
       },
       {
         name: 'entry.280271934',
-        value: getTrialValue(trialType, isPersian),
+        value: getTrialValue(trialType),
       },
       {
         name: 'entry.10664830',

@@ -10,7 +10,7 @@ const Banner = () => {
 
   return (
     <Section>
-      <div className="rounded-2xl bg-primary-500 px-6 py-12 text-center text-white shadow-xl">
+      <div className="rounded-2xl border-2 border-primary-500 bg-white px-6 py-12 text-center text-gray-700 shadow-xl dark:bg-gray-800 dark:text-white">
         <h2 className="text-3xl font-bold">
           {isPersian
             ? 'برای شروع یادگیری زبان انگلیسی آماده‌اید؟'
@@ -24,7 +24,7 @@ const Banner = () => {
         </p>
 
         <div className="mt-8">
-          <Link href="#contact">
+          <Link href="/trialsession">
             <Button xl>
               {isPersian ? 'جلسه آزمایشی رایگان' : 'Start Your Free Trial'}
             </Button>

@@ -19,8 +19,20 @@ const Hero = () => {
       <Section yPadding="py-6">
         <NavbarTwoColumns logo={<Logo xl />}>
           <li>
+            <a
+              href="tel:+989397975094"
+              dir="ltr"
+              className="flex items-center gap-2 text-lg font-medium text-gray-700 transition hover:text-primary-600 dark:text-gray-200"
+            >
+              <span>📞</span>
+              <span>+98 939 797 5094</span>
+            </a>
+          </li>
+
+          <li>
             <ThemeToggle />
           </li>
+
           <li>
             <Menu />
           </li>
@@ -55,12 +67,17 @@ const Hero = () => {
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/trialsession">
                 <Button xl>
-                  {isPersian ? 'جلسه آزمایشی رایگان' : 'Free Trial Session'}
+                  🎁 {isPersian ? 'جلسه آزمایشی رایگان' : 'Free Trial Session'}
                 </Button>
               </Link>
               <Link href="/courses">
                 <Button xl>
-                  {isPersian ? 'مشاهده دوره‌ها' : 'View Courses'}
+                  📚 {isPersian ? 'مشاهده دوره‌ها' : 'View Courses'}
+                </Button>
+              </Link>
+              <Link href="/registration">
+                <Button xl>
+                  🚀 {isPersian ? 'ثبت نام دوره‌ها' : 'Courses Registration'}
                 </Button>
               </Link>
             </div>

@@ -27,8 +27,8 @@ const VerticalFeatures = () => {
         }
         description={
           isPersian
-            ? 'مدرس با نمره ۷.۵ آیلتس آکادمیک، دارای دکتری هوش مصنوعی از دانشگاه تهران و مدرس خصوصی آنلاین با سابقه آموزش به بیش از ۲۰۰ زبان‌آموز در سطوح مختلف و سابقه موفقیت در آزمون‌های معتبر.'
-            : 'IELTS Academic 7.5, PhD in Artificial Intelligence from the University of Tehran, and an online private English teacher with experience teaching more than 200 learners at different levels and helping students prepare successfully for internationally recognized exams.'
+            ? 'مدرس با نمره ۷.۵ آیلتس آکادمیک، دارای دکتری هوش مصنوعی از دانشگاه تهران و مدرس خصوصی آنلاین با سابقه آموزش به بیش از ۳۰۰ زبان‌آموز در سطوح مختلف و سابقه موفقیت در آزمون‌های معتبر.'
+            : 'IELTS Academic 7.5, PhD in Artificial Intelligence from the University of Tehran, and an online private English teacher with experience teaching more than 300 learners at different levels and helping students prepare successfully for internationally recognized exams.'
         }
         image="/assets/images/feature 1.png"
         imageAlt={

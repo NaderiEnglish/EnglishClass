@@ -8,7 +8,7 @@ const Logo = (props: ILogoProps) => {
   const subtitleSize = props.xl ? 'text-xs' : 'text-[10px]';
 
   return (
-    <div className="inline-flex items-center flex-row" dir="ltr">
+    <div className="inline-flex flex-row items-center" dir="ltr">
       <svg
         width={size}
         height={size}

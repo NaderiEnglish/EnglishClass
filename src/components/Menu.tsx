@@ -15,7 +15,7 @@ const Menu = () => {
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isPersian ? 'باز کردن منو' : 'Open menu'}
         aria-expanded={isOpen}
-        className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-lg text-gray-700 transition hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-800"
+        className="flex size-11 flex-col items-center justify-center gap-1.5 rounded-lg text-gray-700 transition hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-800"
       >
         <span className="block h-0.5 w-6 bg-current" />
         <span className="block h-0.5 w-6 bg-current" />
@@ -24,7 +24,7 @@ const Menu = () => {
 
       {isOpen && (
         <div
-          className={`absolute top-14 z-50 w-64 rounded-2xl border border-gray-200 bg-white p-3 shadow-xl dark:border-gray-700 dark:bg-gray-800 ${
+          className={`absolute top-14 z-50 w-72 rounded-2xl border border-gray-200 bg-white p-3 shadow-xl dark:border-gray-700 dark:bg-gray-800 ${
             isPersian ? 'left-0' : 'right-0'
           }`}
         >
@@ -42,51 +42,33 @@ const Menu = () => {
 
               <li>
                 <Link
-                  href="/general"
+                  href="/courses"
                   onClick={() => setIsOpen(false)}
                   className="block rounded-xl px-4 py-3 text-lg font-medium text-gray-700 transition hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                 >
-                  {isPersian ? 'انگلیسی عمومی' : 'General English'}
+                  {isPersian ? 'مشاهده دوره‌ها 📚' : '📚 View Courses'}
                 </Link>
               </li>
 
               <li>
                 <Link
-                  href="/ielts"
+                  href="/registration"
                   onClick={() => setIsOpen(false)}
                   className="block rounded-xl px-4 py-3 text-lg font-medium text-gray-700 transition hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                 >
-                  IELTS
+                  {isPersian ? 'ثبت‌نام دوره‌ها 🚀' : '🚀 Courses Registration'}
                 </Link>
               </li>
 
               <li>
                 <Link
-                  href="/toefl"
+                  href="/trialsession"
                   onClick={() => setIsOpen(false)}
                   className="block rounded-xl px-4 py-3 text-lg font-medium text-gray-700 transition hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                 >
-                  TOEFL
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/speaking"
-                  onClick={() => setIsOpen(false)}
-                  className="block rounded-xl px-4 py-3 text-lg font-medium text-gray-700 transition hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                >
-                  {isPersian ? 'مکالمه' : 'Speaking'}
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href="/free-contents"
-                  onClick={() => setIsOpen(false)}
-                  className="block rounded-xl px-4 py-3 text-lg font-medium text-gray-700 transition hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-                >
-                  {isPersian ? 'مطالب مفید رایگان' : 'Free Useful Contents'}
+                  {isPersian
+                    ? 'جلسه آزمایشی رایگان 🎁'
+                    : '🎁 Free Trial Session'}
                 </Link>
               </li>
             </ul>

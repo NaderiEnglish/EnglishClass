@@ -16,18 +16,18 @@ const IntroVideo = () => {
     >
       <div className="mx-auto max-w-4xl">
         <div className="relative overflow-hidden rounded-2xl shadow-xl">
-          <div className="aspect-video">
+          <div className="aspect-[16/9]">
             {isPersian ? (
               <iframe
-                className="h-full w-full"
-                src="https://www.aparat.com/video/video/embed/videohash/npu751w/vt/frame"
+                className="size-full"
+                src="https://www.aparat.com/video/video/embed/videohash/zcmnb14/vt/frame"
                 title="معرفی مدرس و کلاس‌های زبان انگلیسی"
                 allowFullScreen
               />
             ) : (
               <iframe
-                className="h-full w-full"
-                src="https://www.youtube.com/embed/X1WpQInh1Dw"
+                className="size-full"
+                src="https://www.aparat.com/video/video/embed/videohash/zcmnb14/vt/frame"
                 title="Introduction to English classes"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen

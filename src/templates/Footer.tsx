@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
@@ -12,15 +10,6 @@ const Footer = () => {
         <p>
           {isPersian ? '© تمامی حقوق محفوظ است.' : '© All rights reserved.'}
         </p>
-
-        <div className="mt-4">
-          <Link
-            href="https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template"
-            className="text-primary-500 hover:text-primary-600"
-          >
-            {isPersian ? 'گیت‌هاب' : 'GitHub'}
-          </Link>
-        </div>
       </div>
     </footer>
   );
